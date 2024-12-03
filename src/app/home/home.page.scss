@@ -47,3 +47,81 @@
   transform: translate(-50%, -50%);
   width: 300px;
 }
+
+
+
+//regole css form
+
+ion-header.custom-header {
+  --background: #ffffff; /* Sfondo bianco fisso */
+  --ion-color-base: #ffffff; /* Colore di base per temi scuri */
+  --ion-toolbar-background: #ffffff; /* Sfondo della toolbar */
+  --ion-toolbar-border-color: #008000; /* Linea verde */
+  border-bottom: 2px solid var(--ion-toolbar-border-color); /* Linea verde sotto l'header */
+}
+
+
+.header-logo {
+  height: 40px; /* Modifica l'altezza dell'immagine */
+  width: auto; /* Mantieni le proporzioni */
+}
+
+ion-button {
+  margin-top: 20px;
+  --background: #007bff;
+  --color: white;
+}
+
+.form-container {
+  border: 2px solid green; /* Bordi verdi */
+  border-radius: 15px; /* Bordi arrotondati */
+  padding: 20px;
+  margin: 20px;
+  // background-color: #fff; /* Sfondo bianco per il contenitore */
+}
+
+.form-title {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #000; /* Colore della scritta al centro */
+  margin-bottom: 20px; /* Spazio sotto il titolo */
+}
+
+ion-toggle {
+  --color-checked: #28a745; /* Colore verde quando il toggle è attivo */
+}
+
+.promotion-toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+ion-label {
+  margin-right: 10px; /* Distanza tra il label e il toggle */
+}
+
+ion-toggle {
+  margin-top: 7px; /* Spazio sopra il toggle */
+  margin-bottom: 7px; /* Spazio sotto il toggle */
+}
+
+.add-product-button {
+  margin-top: -10px; /* Sposta il bottone verso l'alto */
+}
+
+.disabled{
+  pointer-events:none;
+}
+
+
+
+
+
+
+
+
+
+
+

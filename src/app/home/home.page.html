@@ -1,28 +1,124 @@
-<ion-header [translucent]="true" *ngIf="!scanActive">
+<ion-header [translucent]="true" *ngIf="!scanActive" class="custom-header">
   <ion-toolbar>
-    <ion-title> Barcode Scanner </ion-title>
+    <ion-title>
+      <img src="\assets\logo-bricoware250.png" alt="Logo" class="header-logo" />
+    </ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content
   [fullscreen]="true"
-  [style.--background]="scanActive? '#00000000' : '#fff'"
+  [style.--background]="scanActive ? '#00000000' : '#fff'"
 >
-  <ion-button
-    expand="fullscreen"
-    (click)="startScanner()"
-    *ngIf="!scanActive"
-  >
-    <ion-icon name="scan" slot="start"> </ion-icon>Start Scan</ion-button
-  >
+  <!-- Form Container -->
+  <div class="form-container" [formGroup]="form">
+    <!-- Centered Title -->
+    <div class="form-title">
+      <p>Inserisci i dati</p>
+    </div>
 
-  <p class="ion-text-center" *ngIf="result && !scanActive">{{result}}</p>
+    <ion-select
+      label="Insegna *"
+      placeholder="Seleziona"
+      formControlName="shopName"
+    >
+      <ion-select-option value="Leroy Merlin">Leroy Merlin</ion-select-option>
+      <ion-select-option value="Tecnomat">Tecnomat</ion-select-option>
+      <ion-select-option value="Obi">Obi</ion-select-option>
+      <ion-select-option value="Bricocenter">Bricocenter</ion-select-option>
+      <ion-select-option value="BricoBravo">BricoBravo</ion-select-option>
+      <ion-select-option value="Brico io">Brico io</ion-select-option>
+      <ion-select-option value="EuroBrico">EuroBrico</ion-select-option>
+      <ion-select-option value="Bricofer">Bricofer</ion-select-option>
+      <ion-select-option value="BriCook">BriCook</ion-select-option>
+      <ion-select-option value="CFadda Fai da te"
+        >CFadda Fai da te</ion-select-option
+      >
+    </ion-select>
 
-  <ion-row class="scanner-buttons" *ngIf="scanActive">
-    <ion-col class="ion-no-padding">
-      <ion-button expand="fullscreen" (click)="stopScanner()">Stop</ion-button>
-    </ion-col>
-  </ion-row>
+    <ion-text
+      color="danger"
+      *ngIf="form.get('shopName')?.invalid && form.get('shopName')?.touched"
+    >
+      Il nome del negozio è obbligatorio
+    </ion-text>
 
-  <div class="scan-box" *ngIf="scanActive"></div>
+    <ion-input
+      type="text"
+      fill="solid"
+      label="Codice Utente *"
+      labelPlacement="floating"
+      helperText="Inserisci il codice utente"
+      errorText="Il codice utente è obbligatorio"
+      formControlName="userCode"
+    ></ion-input>
+
+    <ion-input
+      type="number"
+      fill="solid"
+      label="Prezzo *"
+      labelPlacement="floating"
+      helperText="Inserisci il prezzo"
+      errorText="Il prezzo è obbligatorio"
+      formControlName="price"
+    ></ion-input>
+
+    <div class="promotion-toggle">
+      <ion-label position="stacked">È in promozione?</ion-label>
+      <ion-toggle formControlName="isPromotion"></ion-toggle>
+    </div>
+
+    <ion-textarea
+      fill="solid"
+      label="Note"
+      labelPlacement="floating"
+      helperText="Aggiungi eventuali note qui"
+      errorText="Le note sono obbligatorie"
+      formControlName="Note"
+    ></ion-textarea>
+
+    <ion-input
+      class="disabled"
+      type="text"
+      fill="solid"
+      label="Codice Prodotto *"
+      labelPlacement="floating"
+      helperText="Il codice scansionato apparirà qui"
+      errorText="Il codice prodotto è obbligatorio"
+      formControlName="productCode"
+    ></ion-input>
+
+    <!-- Scan Button Section -->
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <ion-button expand="full" (click)="startScanner()">
+          <ion-icon name="scan" slot="start"></ion-icon> Inizia Scansione
+        </ion-button>
+      </ion-col>
+    </ion-row>
+
+    <!-- Add Product Button -->
+    <ion-row class="ion-text-center">
+      <ion-col>
+        <ion-button
+          expand="full"
+          color="warning"
+          class="add-product-button"
+          [disabled]="form.invalid"
+        >
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon> Aggiungi
+          Prodotto
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <p class="ion-text-center" *ngIf="result && !scanActive">{{ result }}</p>
+    <ion-row class="scanner-buttons" *ngIf="scanActive">
+      <ion-col class="ion-no-padding">
+        <ion-button expand="fullscreen" (click)="stopScanner()"
+          >Stop</ion-button
+        >
+      </ion-col>
+    </ion-row>
+    <div class="scan-box" *ngIf="scanActive"></div>
+  </div>
 </ion-content>

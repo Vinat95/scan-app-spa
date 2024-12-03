@@ -34,4 +34,44 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import "@ionic/angular/css/palettes/dark.system.css";
+
+
+
+/* Forza uno stile bianco per tutta l'applicazione */
+body {
+    --background: #ffffff !important; /* Sfondo bianco per tutto il corpo */
+    --ion-background-color: #ffffff !important; /* Imposta il colore di sfondo per i componenti Ionic */
+    --ion-color-primary: #28a745 !important; /* Colore principale (verde) */
+    --ion-color-secondary: #6c757d !important; /* Colore secondario (grigio) */
+    --ion-color-tertiary: #f8f9fa !important; /* Colore terziario (bianco grigiato) */
+    --ion-color-light: #f1f1f1 !important; /* Colore chiaro (grigio molto chiaro) */
+    --ion-color-dark: #212529 !important; /* Colore scuro (nero-grigio) */
+    --ion-color-medium: #6c757d !important; /* Colore medio (grigio) */
+    --ion-color-success: #28a745 !important; /* Colore di successo (verde) */
+    --ion-color-warning: #ffc107 !important; /* Colore di avviso (giallo) */
+    --ion-color-danger: #dc3545 !important; /* Colore di errore (rosso) */
+    --ion-color-dark: #343a40 !important; /* Colore scuro */
+    --ion-text-color: #000000 !important; /* Colore del testo (nero) */
+  }
+  
+  /* Colore per le label (scritte) */
+  ion-label {
+    color: #000000 !important; /* Colore nero per le label */
+  }
+  
+  /* Colore per il testo del bottone */
+  ion-button {
+    --background: #28a745 !important; /* Colore verde per il bottone */
+    --color: white !important; /* Colore bianco per il testo */
+    --border-radius: 10px !important; /* Bordo arrotondato */
+    --padding: 10px 20px !important; /* Spazio interno del bottone */
+  }
+  
+  ion-input, ion-textarea, ion-select {
+    --background: #fff !important; /* Sfondo bianco per gli input */
+    --color: #000000 !important; /* Testo nero per gli input */
+    --border-radius: 10px !important; /* Bordo arrotondato */
+    --padding: 10px 15px !important; /* Spazio interno degli input */
+  }
+
+  
