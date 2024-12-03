@@ -1,0 +1,28 @@
+<ion-header [translucent]="true" *ngIf="scanActive">
+  <ion-toolbar>
+    <ion-title> Barcode Scanner </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content
+  [fullscreen]="true"
+  [style.--background]="scanActive? '#00000000' : '#fff'"
+>
+  <ion-button
+    expand="fullscreen"
+    (click)="startScanner()"
+    *ngIf="!scanActive"
+  >
+    <ion-icon name="scan" slot="start"> </ion-icon>Start Scan</ion-button
+  >
+
+  <p class="ion-text-center" *ngIf="result && !scanActive">{{result}}</p>
+
+  <ion-row class="scanner-buttons" *ngIf="scanActive">
+    <ion-col class="ion-no-padding">
+      <ion-button expand="fullscreen" (click)="stopScanner()">Stop</ion-button>
+    </ion-col>
+  </ion-row>
+
+  <div class="scan-box" *ngIf="scanActive"></div>
+</ion-content>
