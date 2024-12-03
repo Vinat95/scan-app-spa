@@ -17,13 +17,12 @@ export class HomePage implements AfterViewInit, OnDestroy {
     this.form = this.fb.group({
       shopName: ['', [Validators.required]],
       userCode: ['', [Validators.required]],
-      price: [0, [Validators.required, Validators.pattern(/^[0-9]+$/)]], // Campo numerico richiesto
+      price: [0, [Validators.required]], // Campo numerico richiesto
       Note: ['',], // Campo di testo facoltativo
       productCode: [ '', Validators.required], // Campo disabilitato
       isPromotion: [false], // Campo toggle per la promozione
     });
   }
-
 
 
   async startScanner() {
