@@ -11,7 +11,7 @@
   [style.--background]="scanActive ? '#00000000' : '#fff'"
 >
   <!-- Form Container -->
-  <div class="form-container" [formGroup]="form">
+  <div class="form-container" [formGroup]="form" *ngIf="!scanActive">
     <!-- Centered Title -->
     <div class="form-title">
       <p>Inserisci i dati</p>
@@ -111,14 +111,12 @@
         </ion-button>
       </ion-col>
     </ion-row>
-    <p class="ion-text-center" *ngIf="result && !scanActive">{{ result }}</p>
-    <ion-row class="scanner-buttons" *ngIf="scanActive">
-      <ion-col class="ion-no-padding">
-        <ion-button expand="fullscreen" (click)="stopScanner()"
-          >Stop</ion-button
-        >
-      </ion-col>
-    </ion-row>
-    <div class="scan-box" *ngIf="scanActive"></div>
   </div>
+  <ion-row class="scanner-buttons" *ngIf="scanActive">
+    <ion-col class="ion-no-padding">
+      <ion-button expand="fullscreen" (click)="stopScanner()">Stop</ion-button>
+    </ion-col>
+  </ion-row>
+  <div class="scan-box" *ngIf="scanActive"></div>
+  <!-- <p class="ion-text-center" *ngIf="result && !scanActive">{{ result }}</p> -->
 </ion-content>

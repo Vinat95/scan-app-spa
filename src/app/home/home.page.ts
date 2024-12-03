@@ -34,6 +34,9 @@ export class HomePage implements AfterViewInit, OnDestroy {
       console.log('scan: ', result);
       if (result.hasContent) {
         this.result = result.content;
+        this.form.patchValue({
+          productCode: this.result
+        });
         this.scanActive = false;
       }
     }
