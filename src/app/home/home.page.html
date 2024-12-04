@@ -1,17 +1,17 @@
-<ion-header [translucent]="true" *ngIf="!scanActive" class="custom-header">
-  <ion-toolbar>
-    <ion-title>
-      <img src="\assets\logo-bricoware250.png" alt="Logo" class="header-logo" />
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+<!-- Messaggio di successo -->
+<div *ngIf="successMessage" class="success-message">{{ successMessage }}</div>
 
 <ion-content
   [fullscreen]="true"
   [style.--background]="scanActive ? '#00000000' : '#fff'"
 >
   <!-- Form Container -->
-  <div class="form-container" [formGroup]="form" *ngIf="!scanActive">
+  <div
+    class="form-container"
+    [formGroup]="form"
+    *ngIf="!scanActive"
+    [style.margin-top]="'5rem'"
+  >
     <!-- Centered Title -->
     <div class="form-title">
       <p>Inserisci i dati</p>
@@ -21,6 +21,7 @@
       label="Insegna *"
       placeholder="Seleziona"
       formControlName="shopName"
+      class="custom-ion-select"
     >
       <ion-select-option value="Leroy Merlin">Leroy Merlin</ion-select-option>
       <ion-select-option value="Tecnomat">Tecnomat</ion-select-option>
@@ -63,7 +64,7 @@
 
     <div class="promotion-toggle">
       <ion-label position="stacked">È in promozione?</ion-label>
-      <ion-toggle formControlName="isPromotion"></ion-toggle>
+      <ion-toggle formControlName="inPromo"></ion-toggle>
     </div>
 
     <ion-textarea
@@ -71,7 +72,7 @@
       label="Note"
       labelPlacement="floating"
       errorText="Le note sono obbligatorie"
-      formControlName="Note"
+      formControlName="note"
     ></ion-textarea>
 
     <ion-input
@@ -82,7 +83,7 @@
       labelPlacement="floating"
       helperText="Il codice scansionato apparirà qui"
       errorText="Il codice prodotto è obbligatorio"
-      formControlName="productCode"
+      formControlName="code"
     ></ion-input>
 
     <!-- Scan Button Section -->
@@ -102,6 +103,7 @@
           color="warning"
           class="add-product-button"
           [disabled]="form.invalid"
+          (click)="addProduct()"
         >
           <ion-icon name="add-circle-outline" slot="start"></ion-icon> Aggiungi
           Prodotto

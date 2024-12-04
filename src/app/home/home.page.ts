@@ -1,6 +1,8 @@
 import { AfterViewInit, Component, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
+import { Prodotti } from 'src/data/source';
+import { Product } from 'types/product.dto';
 
 @Component({
   selector: 'app-home',
@@ -10,7 +12,9 @@ import { BarcodeScanner } from '@capacitor-community/barcode-scanner';
 export class HomePage implements AfterViewInit, OnDestroy {
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
   result = '';
+  successMessage: string = ''; // Variabile per gestire il messaggio di successo
   scanActive = false;
+  products : Product[] = Prodotti;
 
   
   constructor(private fb: FormBuilder) {
@@ -18,9 +22,9 @@ export class HomePage implements AfterViewInit, OnDestroy {
       shopName: ['', [Validators.required]],
       userCode: ['', [Validators.required]],
       price: [0, [Validators.required]], // Campo numerico richiesto
-      Note: ['',], // Campo di testo facoltativo
-      productCode: [ '', Validators.required], // Campo disabilitato
-      isPromotion: [false], // Campo toggle per la promozione
+      note: ['',], // Campo di testo facoltativo
+      code: [ '', Validators.required], // Campo disabilitato
+      inPromo: [false], // Campo toggle per la promozione
     });
   }
 
@@ -57,6 +61,25 @@ export class HomePage implements AfterViewInit, OnDestroy {
 
   ngOnDestroy(): void {
     BarcodeScanner.stopScan();
+  }
+
+   // Funzione per aggiungere il prodotto all'array
+   addProduct() {
+    if (this.form.valid) {
+      const productData = this.form.value;
+      this.products.push(productData);
+      console.log('Prodotto aggiunto:', productData);
+
+      this.successMessage = 'Prodotto aggiunto con successo!'; // Imposta il messaggio di successo
+      this.form.reset(); // Pulisci il modulo
+
+      // Rimuovi il messaggio dopo 3 secondi
+      setTimeout(() => {
+        this.successMessage = '';
+      }, 2000);
+    } else {
+      console.log('Il modulo non è valido');
+    }
   }
 
 
