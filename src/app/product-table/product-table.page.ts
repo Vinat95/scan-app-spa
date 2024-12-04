@@ -2,6 +2,7 @@ import { Component, OnInit } from "@angular/core";
 import { Product } from "types/product.dto";
 import { Prodotti } from "src/data/source";
 import { AlertController } from "@ionic/angular";
+import { MailService } from "../services/mail.service";
 
 @Component({
   selector: "app-product-table",
@@ -10,8 +11,12 @@ import { AlertController } from "@ionic/angular";
 })
 export class ProductTablePage implements OnInit {
   products: Product[] = Prodotti;
+  isLoading: boolean = false;
 
-  constructor(private alertController: AlertController) {}
+  constructor(
+    private alertController: AlertController,
+    private mailService: MailService
+  ) {}
 
   ngOnInit() {}
 
@@ -48,9 +53,14 @@ export class ProductTablePage implements OnInit {
     }
   }
 
-
   sendProducts() {
-    console.log('Prodotti inviati!');
-    // Aggiungi la logica per l'invio dei prodotti
+    this.mailService.registerUser(this.products).subscribe({
+      next: () => {
+        this.products = [];
+      },
+      error: (error) => {
+        console.log("errore: ", error);
+      },
+    });
   }
 }

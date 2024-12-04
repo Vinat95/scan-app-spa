@@ -1,18 +1,31 @@
 ion-header.custom-header {
-    --background: #ffffff; /* Sfondo bianco */
-    --ion-color-base: #ffffff; /* Colore di base per temi scuri */
-    --ion-toolbar-background: #ffffff; /* Sfondo della toolbar */
-    --ion-toolbar-border-color: #008000; /* Linea verde */
-    border-bottom: 2px solid var(--ion-toolbar-border-color); /* Linea verde sotto l'header */
-    position: relative; /* Necessario per posizionare il logo */
-    margin-bottom: 2rem;
-  }
-  
-  .header-logo {
-    position: absolute; /* Posizionamento assoluto per il logo */
-    top: 50%; /* Allinea verticalmente al centro */
-    left: 50%; /* Allinea orizzontalmente al centro */
-    transform: translate(-50%, -50%); /* Centra perfettamente il logo */
-    height: 40px; /* Modifica l'altezza dell'immagine */
-    width: auto; /* Mantieni le proporzioni */
-  }
+  --background: #ffffff; /* Sfondo bianco */
+  --ion-color-base: #ffffff; /* Colore di base per temi scuri */
+  --ion-toolbar-background: #ffffff; /* Sfondo della toolbar */
+  --ion-toolbar-border-color: #008000; /* Linea verde */
+  border-bottom: 2px solid var(--ion-toolbar-border-color); /* Linea verde sotto l'header */
+  position: relative; /* Necessario per posizionare il logo */
+  margin-bottom: 2rem;
+}
+
+.header-logo {
+  position: absolute; /* Posizionamento assoluto per il logo */
+  top: 50%; /* Allinea verticalmente al centro */
+  left: 50%; /* Allinea orizzontalmente al centro */
+  transform: translate(-50%, -50%); /* Centra perfettamente il logo */
+  height: 40px; /* Modifica l'altezza dell'immagine */
+  width: auto; /* Mantieni le proporzioni */
+}
+
+ion-spinner {
+  width: 100px;
+  height: 100px;
+  position: fixed;
+  top: 50%; /* Centra verticalmente */
+  left: 50%; /* Centra orizzontalmente */
+  transform: translate(-50%, -50%); /* Compensa lo spostamento */
+  z-index: 9999; /* Assicurati che sia sopra gli altri elementi */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
