@@ -36,7 +36,7 @@ export class HomePage implements OnDestroy {
       if (result.hasContent) {
         this.result = result.content;
         this.form.patchValue({
-          productCode: this.result,
+          code: this.result,
         });
         this.scanActive = false;
       }
