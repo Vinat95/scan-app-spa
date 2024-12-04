@@ -47,4 +47,10 @@ export class ProductTablePage implements OnInit {
       console.log("Prodotto rimosso:", product);
     }
   }
+
+
+  sendProducts() {
+    console.log('Prodotti inviati!');
+    // Aggiungi la logica per l'invio dei prodotti
+  }
 }
