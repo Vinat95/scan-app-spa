@@ -4,6 +4,7 @@
   color="success"
   *ngIf="isLoading | async"
 ></ion-spinner>
+<ion-backdrop *ngIf="isLoading | async"></ion-backdrop>
 
 <ion-header [translucent]="true" class="custom-header" id="header">
   <!-- Toast -->

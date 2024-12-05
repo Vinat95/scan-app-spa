@@ -41,3 +41,9 @@ ion-toast {
 .error {
   --background: #f34336;
 }
+
+ion-backdrop {
+  background: var(--ion-color-dark);
+  opacity: 0.3;
+  z-index: 1000;
+}
