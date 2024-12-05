@@ -2,7 +2,8 @@ import { Component, OnDestroy } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 import { Prodotti } from "src/data/source";
-import { Product } from "types/product.dto";
+import { Product } from "types/product";
+import { ToastService } from "../services/toast.service";
 
 @Component({
   selector: "app-home",
@@ -16,11 +17,11 @@ export class HomePage implements OnDestroy {
   scanActive = false;
   products: Product[] = Prodotti;
 
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
       userCode: ["", [Validators.required]],
-      price: [0, [Validators.required]], // Campo numerico richiesto
+      price: [null, [Validators.required]], // Campo numerico richiesto
       note: [""], // Campo di testo facoltativo
       code: ["", Validators.required], // Campo disabilitato
       inPromo: [false], // Campo toggle per la promozione
@@ -62,15 +63,12 @@ export class HomePage implements OnDestroy {
     if (this.form.valid) {
       const productData = this.form.value;
       this.products.push(productData);
-      console.log("Prodotto aggiunto:", productData);
 
-      this.successMessage = "Prodotto aggiunto con successo!"; // Imposta il messaggio di successo
+      this.toastService.showToast({
+        type: "success",
+        message: "Prodotto aggiunto con successo",
+      });
       this.form.reset(); // Pulisci il modulo
-
-      // Rimuovi il messaggio dopo 3 secondi
-      setTimeout(() => {
-        this.successMessage = "";
-      }, 2000);
     } else {
       console.log("Il modulo non è valido");
     }

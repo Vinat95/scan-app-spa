@@ -29,3 +29,15 @@ ion-spinner {
   justify-content: center;
   align-items: center;
 }
+
+ion-toast {
+  --border-radius: 10px;
+}
+
+.success {
+  --background: #2d7121;
+}
+
+.error {
+  --background: #f34336;
+}

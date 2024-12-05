@@ -8,6 +8,7 @@ import { MailService } from "./services/mail.service";
 import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { LoadingService } from "./services/loading.service";
 import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
+import { ToastService } from "./services/toast.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -20,6 +21,7 @@ import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
   providers: [
     MailService,
     LoadingService,
+    ToastService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,

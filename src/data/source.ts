@@ -1,5 +1,3 @@
-import { Product } from "types/product.dto";
+import { Product } from "types/product";
 
-export const Prodotti: Product[] = [
-
-  ];
+export const Prodotti: Product[] = [];

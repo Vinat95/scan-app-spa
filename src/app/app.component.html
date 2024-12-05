@@ -5,7 +5,19 @@
   *ngIf="isLoading | async"
 ></ion-spinner>
 
-<ion-header [translucent]="true" class="custom-header">
+<ion-header [translucent]="true" class="custom-header" id="header">
+  <!-- Toast -->
+  <ion-toast
+    [isOpen]="toast ? true : false"
+    position="top"
+    [message]="toast?.message"
+    position-anchor="header"
+    [ngClass]="{
+      success: toast?.type === 'success',
+      error: toast?.type === 'error'
+    }"
+    duration="2000"
+  ></ion-toast>
   <ion-toolbar>
     <ion-title>
       <img src="\assets\logo-bricoware250.png" alt="Logo" class="header-logo" />

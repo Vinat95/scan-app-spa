@@ -1,8 +1,9 @@
 import { Component, OnInit } from "@angular/core";
-import { Product } from "types/product.dto";
+import { Product } from "types/product";
 import { Prodotti } from "src/data/source";
-import { AlertController } from "@ionic/angular";
+import { AlertController, NavController } from "@ionic/angular";
 import { MailService } from "../services/mail.service";
+import { ToastService } from "../services/toast.service";
 
 @Component({
   selector: "app-product-table",
@@ -15,7 +16,9 @@ export class ProductTablePage implements OnInit {
 
   constructor(
     private alertController: AlertController,
-    private mailService: MailService
+    private mailService: MailService,
+    private toastService: ToastService,
+    private navCtrl: NavController
   ) {}
 
   ngOnInit() {}
@@ -49,17 +52,28 @@ export class ProductTablePage implements OnInit {
     const index = this.products.indexOf(product); // Trova l'indice del prodotto
     if (index > -1) {
       this.products.splice(index, 1); // Rimuovi il prodotto dall'array
-      console.log("Prodotto rimosso:", product);
+      this.toastService.showToast({
+        type: "success",
+        message: "Prodotto Eliminato",
+      });
     }
   }
 
   sendProducts() {
     this.mailService.registerUser(this.products).subscribe({
       next: () => {
-        this.products = [];
+        this.products.splice(0, this.products.length);
+        this.toastService.showToast({
+          type: "success",
+          message: "Mail inviata con successo",
+        });
+        this.navCtrl.navigateForward("/tabs/home");
       },
       error: (error) => {
-        console.log("errore: ", error);
+        this.toastService.showToast({
+          type: "error",
+          message: "Errore durante l'invio: " + error,
+        });
       },
     });
   }
