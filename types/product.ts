@@ -1,8 +1,10 @@
 export type Product={
   shopName: string;
   userCode: string;
-  code: string;
+  ean: string;
   price: number;
   note: string;
   inPromo: boolean;
+  date: Date;
+  isRemoving?:boolean;
 }

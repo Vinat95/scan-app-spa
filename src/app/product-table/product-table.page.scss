@@ -1,40 +1,102 @@
-.product-card {
-  margin: 20px;
-  padding: 20px;
-  border-radius: 8px;
-  background: linear-gradient(135deg, #aae9c0, #135b16);
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-  position: relative;
-  animation: appear linear;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  30% {
+    transform: scale(0.8) rotate(10deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(0.6) rotate(-10deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
+  }
 }
 
 @keyframes appear {
   from {
     opacity: 0;
-    // clip-path: inset(100% 100% 0 0);
-    // transform: translateX(-100px);
     scale: 0.5;
   }
   to {
     opacity: 1;
-    // clip-path: inset(0 0 0 0);
-    // transform: translateX(0px);
     scale: 1;
   }
 }
 
+.product-card {
+  margin: 20px;
+  padding: 20px;
+  border-radius: 20px; /* Angoli arrotondati per un look morbido */
+  background: linear-gradient(135deg, #76c7c0, #3b8c52); /* Gradiente più sofisticato */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Ombra morbida con effetto galleggiante */
+  position: relative;
+  animation: appear linear;
+  animation-timeline: view();
+  animation-range: entry 0% cover 40%;
+  transition: all 0.4s ease-out; /* Transizione per un effetto più fluido */
+  transform-origin: center;
+}
+
+
+.product-card.removing {
+  animation: explode 1s forwards ease-out;
+  pointer-events: none;
+}
+
+.product-card .card-content {
+  opacity: 1;
+  transition: opacity 0.3s ease-out;
+}
+
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  bottom: 10px;
+  border-radius: 15px;
+  border: 2px solid rgba(255, 255, 255, 0.4); /* Contorno delicato */
+  pointer-events: none;
+}
+
+.product-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 20px;
+  pointer-events: none;
+}
+
 .shop-name {
   text-align: center;
-  padding: 15px;
+  padding: 20px 25px;
   margin-bottom: 20px;
-  border: 2px solid #000000; /* Bordo bianco attorno all'insegna */
-  border-radius: 8px;
-  font-family: "Georgia", serif; /* Font elegante */
+  border-radius: 12px;
   font-weight: bold;
-  font-size: 24px;
-  color: #000000; /* Testo bianco per contrastare con il verde */
+  font-size: 32px;
+  color: #ffffff;
+  background: linear-gradient(135deg, #76c7c0, #3b8c52);
+  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: background 0.3s ease-in-out;
+}
+
+
+.bold-text {
+  font-size: 19px;
+  font-weight: bold;
 }
 
 ion-card-header {
@@ -48,43 +110,36 @@ ion-card-content {
 ion-item {
   margin-bottom: 10px;
   border-radius: 8px;
-  background-color: #ffffff; /* Sfondo bianco per contrastare */
-  padding: 6px;
-}
-
-ion-label {
-  font-size: 16px;
-  font-weight: bold;
-  color: #333;
+  background-color: #ffffff;
+  padding: 2px;
 }
 
 .noProduct {
   display: flex;
-  flex-direction: column; /* Dispone l'icona sopra la scritta */
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  position: fixed; /* Rende l'elemento fisso nella finestra */
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  height: 100%; /* Occupa tutta l'altezza della finestra */
-  background-color: rgb(255, 255, 255); /* Sfondo bianco */
+  height: 100%;
+  background-color: rgb(255, 255, 255);
   text-align: center;
   font-size: 1.5rem;
-  font-family: "Playfair Display", serif; /* Font elegante */
-  color: rgba(100, 198, 103, 0.7); /* Colore verde sbiadito per il testo */
-  z-index: 9999; /* Assicurati che sia sopra gli altri elementi */
-  pointer-events: none; /* Disabilita l'interazione */
+  color: rgba(100, 198, 103, 0.7);
+  z-index: 9999;
+  pointer-events: none;
 }
 
 .noProduct ion-icon {
-  font-size: 3rem; /* Imposta una dimensione per l'icona */
-  margin-bottom: 1rem; /* Distanza tra l'icona e il testo */
-  color: #4caf50; /* Colore verde per l'icona */
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  color: #4caf50;
 }
 
 .center-button {
   display: flex;
   justify-content: center;
-  margin-top: 2rem; /* Distanza dalle card */
+  margin-top: 2rem;
 }

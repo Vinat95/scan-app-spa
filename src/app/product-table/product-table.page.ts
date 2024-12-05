@@ -48,14 +48,20 @@ export class ProductTablePage implements OnInit {
     await alert.present();
   }
 
-  private removeProduct(product: Product) {
-    const index = this.products.indexOf(product); // Trova l'indice del prodotto
+  removeProduct(product: Product) {
+    const index = this.products.indexOf(product);
     if (index > -1) {
-      this.products.splice(index, 1); // Rimuovi il prodotto dall'array
-      this.toastService.showToast({
-        type: "success",
-        message: "Prodotto Eliminato",
-      });
+      // Aggiungi la classe "removing" per avviare l'animazione
+      product.isRemoving = true;
+  
+      // Attendi l'animazione prima di rimuovere il prodotto
+      setTimeout(() => {
+        this.products.splice(index, 1);
+        this.toastService.showToast({
+          type: "success",
+          message: "Prodotto Eliminato",
+        });
+      }, 1000); // timeout con la durata dell'animazione
     }
   }
 

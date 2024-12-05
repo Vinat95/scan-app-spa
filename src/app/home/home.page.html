@@ -20,25 +20,16 @@
       formControlName="shopName"
       class="custom-ion-select"
     >
-      <ion-select-option value="Leroy Merlin">Leroy Merlin</ion-select-option>
-      <ion-select-option value="Tecnomat">Tecnomat</ion-select-option>
-      <ion-select-option value="Obi">Obi</ion-select-option>
-      <ion-select-option value="Bricocenter">Bricocenter</ion-select-option>
-      <ion-select-option value="BricoBravo">BricoBravo</ion-select-option>
-      <ion-select-option value="Brico io">Brico io</ion-select-option>
-      <ion-select-option value="EuroBrico">EuroBrico</ion-select-option>
-      <ion-select-option value="Bricofer">Bricofer</ion-select-option>
-      <ion-select-option value="BriCook">BriCook</ion-select-option>
-      <ion-select-option value="CFadda Fai da te"
-        >CFadda Fai da te</ion-select-option
-      >
+    <ion-select-option *ngFor="let shop of shopNames" [value]="shop.name">
+      {{ shop.name }}
+    </ion-select-option>
     </ion-select>
 
     <ion-text
       color="danger"
       *ngIf="form.get('shopName')?.invalid && form.get('shopName')?.touched"
     >
-      Il nome del negozio è obbligatorio
+      L'insegna è obbligatoria
     </ion-text>
 
     <ion-input
@@ -60,7 +51,7 @@
     ></ion-input>
 
     <div class="promotion-toggle">
-      <ion-label position="stacked">PROMO</ion-label>
+      <ion-label>PROMO</ion-label>
       <ion-toggle formControlName="inPromo"></ion-toggle>
     </div>
     <ion-textarea
@@ -74,11 +65,11 @@
     <ion-input
       type="text"
       fill="solid"
-      label="Codice Prodotto *"
+      label="Codice ean*"
       labelPlacement="floating"
       helperText="Il codice scansionato apparirà qui"
-      errorText="Il codice prodotto è obbligatorio"
-      formControlName="code"
+      errorText="Il codice ean è obbligatorio"
+      formControlName="ean"
     ></ion-input>
 
     <!-- Scan Button Section -->

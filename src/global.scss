@@ -11,14 +11,15 @@
 
 /* Core CSS required for Ionic components to work properly */
 @import "@ionic/angular/css/core.css";
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&display=swap');
 
 /* Basic CSS for apps built with Ionic */
-@import "@ionic/angular/css/normalize.css";
+ @import "@ionic/angular/css/normalize.css";
 @import "@ionic/angular/css/structure.css";
 @import "@ionic/angular/css/typography.css";
-@import "@ionic/angular/css/display.css";
+ @import "@ionic/angular/css/display.css";
 
-/* Optional CSS utils that can be commented out */
+// /* Optional CSS utils that can be commented out */
 @import "@ionic/angular/css/padding.css";
 @import "@ionic/angular/css/float-elements.css";
 @import "@ionic/angular/css/text-alignment.css";
@@ -38,6 +39,24 @@
 
 
 /* Forza uno stile bianco per tutta l'applicazione */
+
+* {
+  font-family: 'Playfair Display', serif !important;
+}
+
+ion-app,
+ion-header,
+ion-footer,
+ion-content,
+ion-button,
+ion-label,
+ion-item,
+ion-card,
+ion-card-header,
+ion-card-content {
+  font-family: 'Playfair Display', serif !important;
+}
+
 body {
     // --background: #ffffff !important; /* Sfondo bianco per tutto il corpo */
     // --ion-background-color: #ffffff !important; /* Imposta il colore di sfondo per i componenti Ionic */
@@ -59,19 +78,19 @@ body {
     color: #000000 !important; /* Colore nero per le label */
   }
   
-  /* Colore per il testo del bottone */
-  ion-button {
-    --background: #28a745 !important; /* Colore verde per il bottone */
-    --color: white !important; /* Colore bianco per il testo */
-    --border-radius: 10px !important; /* Bordo arrotondato */
-    --padding: 10px 20px !important; /* Spazio interno del bottone */
-  }
+  // /* Colore per il testo del bottone */
+  // ion-button {
+  //   --background: #28a745 !important; /* Colore verde per il bottone */
+  //   --color: white !important; /* Colore bianco per il testo */
+  //   --border-radius: 10px !important; /* Bordo arrotondato */
+  //   --padding: 10px 20px !important; /* Spazio interno del bottone */
+  // }
   
-  ion-input, ion-textarea, ion-select {
-    --background: #fff !important; /* Sfondo bianco per gli input */
-    --color: #000000 !important; /* Testo nero per gli input */
-    --border-radius: 10px !important; /* Bordo arrotondato */
-    --padding: 10px 15px !important; /* Spazio interno degli input */
-  }
+  // ion-input, ion-textarea, ion-select {
+  //   --background: #fff !important; /* Sfondo bianco per gli input */
+  //   --color: #000000 !important; /* Testo nero per gli input */
+  //   --border-radius: 10px !important; /* Bordo arrotondato */
+  //   --padding: 10px 15px !important; /* Spazio interno degli input */
+  // }
 
   
