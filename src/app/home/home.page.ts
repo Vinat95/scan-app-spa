@@ -74,14 +74,12 @@ export class HomePage implements OnDestroy {
         minute: "2-digit",
         hour12: false, // Utilizza il formato 24 ore
       });
-  
-      const productData = {
-        ...this.form.value,
-        date: currentDate, // Aggiungi la data e l'ora formattate
-      };
-  
-      this.products.push(productData);
-  
+
+      this.form.patchValue({
+        date: currentDate,
+      });
+
+      this.products.push(this.form.value);  
       this.toastService.showToast({
         type: "success",
         message: "Prodotto aggiunto con successo",
