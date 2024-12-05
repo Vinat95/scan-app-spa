@@ -80,29 +80,6 @@ ion-toggle {
   margin-top: -10px; /* Sposta il bottone verso l'alto */
 }
 
-.success-message {
-  position: fixed;
-  top: 50%; /* Centra verticalmente */
-  left: 50%; /* Centra orizzontalmente */
-  transform: translate(-50%, -50%); /* Sposta il messaggio indietro di metà della sua altezza e larghezza per centrarlo esattamente */
-  background-color: #28a745; /* Verde per il successo */
-  color: white;
-  padding: 15px;
-  border-radius: 5px;
-  font-size: 1.2rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-  animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
 
 
 
