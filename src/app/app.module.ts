@@ -9,6 +9,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { LoadingService } from "./services/loading.service";
 import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
 import { ToastService } from "./services/toast.service";
+import { ErrorInterceptor } from "./interceptors/error.interceptor";
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +26,11 @@ import { ToastService } from "./services/toast.service";
     {
       provide: HTTP_INTERCEPTORS,
       useClass: SpinnerInterceptor,
+      multi: true,
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
       multi: true,
     },
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

@@ -72,7 +72,7 @@ export class ProductTablePage implements OnInit {
       error: (error) => {
         this.toastService.showToast({
           type: "error",
-          message: "Errore durante l'invio: " + error,
+          message: "Errore durante l'invio: " + error.message,
         });
       },
     });
