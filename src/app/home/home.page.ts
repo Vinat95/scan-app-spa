@@ -13,6 +13,7 @@ import { Insignia } from "types/shops";
   styleUrls: ["home.page.scss"],
 })
 export class HomePage implements OnDestroy {
+  remainingChars: number = 250; //lunghezza massima del campo note
   shopNames: Insignia[] = Insegne;
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
   result = "";
@@ -24,12 +25,51 @@ export class HomePage implements OnDestroy {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
       userCode: ["", [Validators.required]],
-      price: [null, [Validators.required]], // Campo numerico richiesto
-      note: [""], // Campo di testo facoltativo
-      ean: ["", Validators.required], // Campo disabilitato
+      price: [null, [Validators.required]], // Campo prezzo richiesto
+      note: ["",[Validators.maxLength(250)]], // Campo di testo facoltativo
+      ean: ["",[ Validators.required,Validators.pattern(/^\d{13}$/),],],
       inPromo: [false], // Campo toggle per la promozione
       date: [null],
     });
+
+      // Monitora i cambiamenti nel campo delle note
+    this.form.get('note')?.valueChanges.subscribe(value => {
+      this.remainingChars = 250 - value.length;
+    });
+  }
+
+  getEanHelperText(): string {
+    const eanControl = this.form.get("ean");
+
+    // Caso iniziale: nessuna interazione con il campo
+    if (eanControl?.pristine) {
+      return "Il codice scansionato apparirà qui";
+    }
+
+    // Caso predefinito: non ci sono errori specifici ma l'utente ha iniziato a scrivere
+    return "";
+  }
+
+  getEanErrorText(): string {
+    const eanControl = this.form.get("ean");
+
+    if (!eanControl) return "";
+
+    // Caso di errore: campo obbligatorio
+    if (
+      eanControl.invalid &&
+      eanControl.hasError("required") &&
+      eanControl.touched
+    ) {
+      return "Il codice ean è obbligatorio";
+    }
+
+    // Caso di errore: formato non valido
+    if (eanControl.invalid && eanControl.hasError("pattern")) {
+      return "Il codice ean ha bisogno di 13 cifre numeriche";
+    }
+
+    return "";
   }
 
   async startScanner() {
@@ -79,12 +119,12 @@ export class HomePage implements OnDestroy {
         date: currentDate,
       });
 
-      this.products.push(this.form.value);  
+      this.products.push(this.form.value);
       this.toastService.showToast({
         type: "success",
         message: "Prodotto aggiunto con successo",
       });
-  
+
       // Resetta solo i campi non bloccati
       this.form.reset({
         shopName: this.form.get("shopName")?.value,

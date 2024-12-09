@@ -54,21 +54,31 @@
       <ion-label>PROMO</ion-label>
       <ion-toggle formControlName="inPromo"></ion-toggle>
     </div>
+
     <ion-textarea
       fill="solid"
       label="Note"
       labelPlacement="floating"
+      maxlength="250"
       errorText="Le note sono obbligatorie"
       formControlName="note"
     ></ion-textarea>
+    <!-- Messaggio dinamico sotto il campo delle note -->
+    <ion-text color="medium" *ngIf="form.get('note')?.value?.length > 0">
+      <span *ngIf="remainingChars > 0">
+        Puoi inserire ancora {{ remainingChars }} caratteri.
+      </span>
+      <span *ngIf="remainingChars === 0"> Lunghezza massima inserita. </span>
+    </ion-text>
 
     <ion-input
       type="text"
+      inputmode="numeric"
       fill="solid"
       label="Codice ean*"
       labelPlacement="floating"
-      helperText="Il codice scansionato apparirà qui"
-      errorText="Il codice ean è obbligatorio"
+      [helperText]="getEanHelperText()"
+      [errorText]="getEanErrorText()"
       formControlName="ean"
     ></ion-input>
 
