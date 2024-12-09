@@ -7,3 +7,7 @@ export type Product={
   inPromo: boolean;
   date: Date;
 }
+
+export type Products = {
+  products: Product[];
+};

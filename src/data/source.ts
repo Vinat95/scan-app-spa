@@ -1,3 +1,3 @@
-import { Product } from "types/product";
+import { Products } from "types/product";
 
-export const Prodotti: Product[] = [];
+export const Prodotti: Products = { products: [] };

@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="view" [style.margin-top]="'5rem'">
     <!-- Card with a border -->
-    @if (products.length >0) {
+    @if (productsList.products.length >0) {
     <div class="center-button">
       <ion-button expand="block" color="primary" (click)="sendProducts()">
         Invia
@@ -9,7 +9,7 @@
     </div>
     <ion-card
       class="product-card"
-      *ngFor="let prod of products"
+      *ngFor="let prod of productsList.products"
       [class.removing]="removingProducts.has(prod)"
     >
       <ion-card-header>

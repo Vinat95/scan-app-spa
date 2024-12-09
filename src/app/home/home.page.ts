@@ -19,21 +19,21 @@ export class HomePage implements OnDestroy {
   result = "";
   successMessage: string = ""; // Variabile per gestire il messaggio di successo
   scanActive = false;
-  products: Product[] = Prodotti;
+  // products: Product[] = Prodotti;
 
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
       userCode: ["", [Validators.required]],
       price: [null, [Validators.required]], // Campo prezzo richiesto
-      note: ["",[Validators.maxLength(250)]], // Campo di testo facoltativo
-      ean: ["",[ Validators.required,Validators.pattern(/^\d{13}$/),],],
+      note: ["", [Validators.maxLength(250)]], // Campo di testo facoltativo
+      ean: ["", [Validators.required, Validators.pattern(/^\d{13}$/)]],
       inPromo: [false], // Campo toggle per la promozione
       date: [null],
     });
 
-      // Monitora i cambiamenti nel campo delle note
-    this.form.get('note')?.valueChanges.subscribe(value => {
+    // Monitora i cambiamenti nel campo delle note
+    this.form.get("note")?.valueChanges.subscribe((value) => {
       this.remainingChars = 250 - value.length;
     });
   }
@@ -119,7 +119,8 @@ export class HomePage implements OnDestroy {
         date: currentDate,
       });
 
-      this.products.push(this.form.value);
+      // this.products.push(this.form.value);
+      Prodotti.products.push({ ...this.form.value });
       this.toastService.showToast({
         type: "success",
         message: "Prodotto aggiunto con successo",

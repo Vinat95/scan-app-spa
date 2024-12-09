@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { Product } from "types/product";
+import { Product, Products } from "types/product";
 import { Prodotti } from "src/data/source";
 import { AlertController, NavController } from "@ionic/angular";
 import { MailService } from "../services/mail.service";
@@ -11,9 +11,9 @@ import { ToastService } from "../services/toast.service";
   styleUrls: ["./product-table.page.scss"],
 })
 export class ProductTablePage implements OnInit {
-  products: Product[] = Prodotti;
   removingProducts = new Set<Product>();
   isLoading: boolean = false;
+  productsList: Products = Prodotti;
 
   constructor(
     private alertController: AlertController,
@@ -50,14 +50,14 @@ export class ProductTablePage implements OnInit {
   }
 
   removeProduct(product: Product) {
-    const index = this.products.indexOf(product);
+    const index = this.productsList.products.indexOf(product);
     if (index > -1) {
       // Aggiungi la classe "removing" per avviare l'animazione
       this.removingProducts.add(product);
 
       // Attendi l'animazione prima di rimuovere il prodotto
       setTimeout(() => {
-        this.products.splice(index, 1);
+        this.productsList.products.splice(index, 1);
         this.removingProducts.delete(product);
         this.toastService.showToast({
           type: "success",
@@ -68,9 +68,9 @@ export class ProductTablePage implements OnInit {
   }
 
   sendProducts() {
-    this.mailService.registerUser(this.products).subscribe({
+    this.mailService.registerUser(this.productsList).subscribe({
       next: (res: any) => {
-        this.products.splice(0, this.products.length);
+        this.productsList.products.splice(0, this.productsList.products.length);
         this.toastService.showToast({
           type: "success",
           message: res.message,
