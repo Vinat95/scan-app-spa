@@ -10,7 +10,7 @@
     <ion-card
       class="product-card"
       *ngFor="let prod of products"
-      [class.removing]="prod.isRemoving"
+      [class.removing]="removingProducts.has(prod)"
     >
       <ion-card-header>
         <!-- Shop Name with a border -->

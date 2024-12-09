@@ -12,6 +12,7 @@ import { ToastService } from "../services/toast.service";
 })
 export class ProductTablePage implements OnInit {
   products: Product[] = Prodotti;
+  removingProducts = new Set<Product>();
   isLoading: boolean = false;
 
   constructor(
@@ -52,11 +53,12 @@ export class ProductTablePage implements OnInit {
     const index = this.products.indexOf(product);
     if (index > -1) {
       // Aggiungi la classe "removing" per avviare l'animazione
-      product.isRemoving = true;
+      this.removingProducts.add(product);
   
       // Attendi l'animazione prima di rimuovere il prodotto
       setTimeout(() => {
         this.products.splice(index, 1);
+        this.removingProducts.delete(product); 
         this.toastService.showToast({
           type: "success",
           message: "Prodotto Eliminato",

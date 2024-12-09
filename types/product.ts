@@ -6,5 +6,4 @@ export type Product={
   note: string;
   inPromo: boolean;
   date: Date;
-  isRemoving?:boolean;
 }
