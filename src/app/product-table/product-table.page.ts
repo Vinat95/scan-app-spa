@@ -54,11 +54,11 @@ export class ProductTablePage implements OnInit {
     if (index > -1) {
       // Aggiungi la classe "removing" per avviare l'animazione
       this.removingProducts.add(product);
-  
+
       // Attendi l'animazione prima di rimuovere il prodotto
       setTimeout(() => {
         this.products.splice(index, 1);
-        this.removingProducts.delete(product); 
+        this.removingProducts.delete(product);
         this.toastService.showToast({
           type: "success",
           message: "Prodotto Eliminato",
@@ -69,11 +69,11 @@ export class ProductTablePage implements OnInit {
 
   sendProducts() {
     this.mailService.registerUser(this.products).subscribe({
-      next: () => {
+      next: (res: any) => {
         this.products.splice(0, this.products.length);
         this.toastService.showToast({
           type: "success",
-          message: "Mail inviata con successo",
+          message: res.message,
         });
         this.navCtrl.navigateForward("/tabs/home");
       },
