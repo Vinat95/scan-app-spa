@@ -143,3 +143,47 @@ ion-item {
   justify-content: center;
   margin-top: 2rem;
 }
+
+
+.product-count {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 16px 0;
+  padding: 10px;
+  background-color: #f0f8ff; /* Un colore di sfondo chiaro per far risaltare il messaggio */
+  border-radius: 8px;
+  color: #2f4f4f; /* Colore del testo */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
+  
+  /* Animazione di typing senza delay */
+  animation: typing 1s steps(60) forwards; /* Aggiungi animazione typing senza delay */
+
+  /* Aggiungi flexbox per allineare l'icona e il testo sulla stessa riga */
+  display: flex;
+  align-items: center; /* Allinea verticalmente l'icona e il testo */
+  justify-content: center; /* Centra il contenuto orizzontalmente */
+  
+  width: fit-content; /* Aggiunto per permettere il controllo del testo */
+  overflow: hidden; /* Nasconde il testo in eccesso mentre la scrittura si anima */
+  white-space: nowrap; /* Impedisce che il testo vada a capo */
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.product-count ion-icon {
+  margin-right: 8px;
+  color: #00796b; /* Colore dell'icona */
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra all'icona */
+}
+
+
+
+

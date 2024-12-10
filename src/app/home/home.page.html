@@ -35,7 +35,7 @@
     <ion-input
       type="text"
       fill="solid"
-      label="Codice Utente *"
+      label="Utente *"
       labelPlacement="floating"
       errorText="Il codice utente è obbligatorio"
       formControlName="userCode"
@@ -77,7 +77,7 @@
       fill="solid"
       label="Codice ean*"
       labelPlacement="floating"
-      [helperText]="getEanHelperText()"
+      helperText="Il codice scansionato apparirà qui, ed ha bisogno di 13 cifre numeriche"
       [errorText]="getEanErrorText()"
       formControlName="ean"
     ></ion-input>

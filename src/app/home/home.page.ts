@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 import { Prodotti } from "src/data/source";
@@ -12,7 +12,7 @@ import { Insignia } from "types/shops";
   templateUrl: "home.page.html",
   styleUrls: ["home.page.scss"],
 })
-export class HomePage implements OnDestroy {
+export class HomePage implements OnDestroy{
   remainingChars: number = 250; //lunghezza massima del campo note
   shopNames: Insignia[] = Insegne;
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
@@ -37,41 +37,31 @@ export class HomePage implements OnDestroy {
       this.remainingChars = 250 - value.length;
     });
   }
-
-  getEanHelperText(): string {
-    const eanControl = this.form.get("ean");
-
-    // Caso iniziale: nessuna interazione con il campo
-    if (eanControl?.pristine) {
-      return "Il codice scansionato apparirà qui";
-    }
-
-    // Caso predefinito: non ci sono errori specifici ma l'utente ha iniziato a scrivere
-    return "";
-  }
-
+  
   getEanErrorText(): string {
     const eanControl = this.form.get("ean");
-
+  
     if (!eanControl) return "";
-
+  
+    // Se il campo è vuoto e non è stato toccato, non mostriamo errori
+    if (!eanControl.value && eanControl.pristine) {
+      return ""; // Nessun errore se non è stato modificato e il campo è vuoto
+    }
+  
     // Caso di errore: campo obbligatorio
-    if (
-      eanControl.invalid &&
-      eanControl.hasError("required") &&
-      eanControl.touched
-    ) {
+    if (eanControl.invalid && eanControl.hasError("required")) {
       return "Il codice ean è obbligatorio";
     }
-
-    // Caso di errore: formato non valido
-    if (eanControl.invalid && eanControl.hasError("pattern")) {
+  
+    // Caso di errore: formato non valido (13 cifre numeriche)
+    // Questo errore deve comparire sia quando si scrive nel campo che quando si tocca fuori e si ritorna
+    if (eanControl.invalid || eanControl.hasError("pattern") ) {
       return "Il codice ean ha bisogno di 13 cifre numeriche";
     }
-
+  
     return "";
   }
-
+  
   async startScanner() {
     const allowed = await this.checkPermission();
     if (allowed) {

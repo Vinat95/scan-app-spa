@@ -2,11 +2,19 @@
   <div class="view" [style.margin-top]="'5rem'">
     <!-- Card with a border -->
     @if (productsList.products.length >0) {
+    
+
+    <div *ngIf="productsList.products.length > 0" class="product-count">
+      <ion-icon name="checkmark-circle" size="large"></ion-icon>
+      Hai rilevato {{ productsList.products.length }} prodotto/i.
+    </div>
+
     <div class="center-button">
       <ion-button expand="block" color="primary" (click)="sendProducts()">
         Invia
       </ion-button>
     </div>
+    
     <ion-card
       class="product-card"
       *ngFor="let prod of productsList.products"
