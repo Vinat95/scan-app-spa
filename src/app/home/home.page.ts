@@ -1,8 +1,7 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, OnDestroy} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 import { Prodotti } from "src/data/source";
-import { Product } from "types/product";
 import { ToastService } from "../services/toast.service";
 import { Insegne } from "src/data/shops";
 import { Insignia } from "types/shops";
