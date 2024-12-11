@@ -6,6 +6,7 @@
 /android
 /out-tsc
 /bazel-out
+/resources
 
 # Node
 /node_modules
