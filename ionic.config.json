@@ -1,5 +1,5 @@
 {
-  "name": "scan",
+  "name": "Bricoscan",
   "integrations": {
     "capacitor": {}
   },
