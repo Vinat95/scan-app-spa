@@ -68,7 +68,7 @@ export class ProductTablePage implements OnInit {
   }
 
   sendProducts() {
-    this.mailService.registerUser(this.productsList).subscribe({
+    this.mailService.sendProducts(this.productsList).subscribe({
       next: (res: any) => {
         this.productsList.products.splice(0, this.productsList.products.length);
         this.toastService.showToast({

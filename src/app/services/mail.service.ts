@@ -9,7 +9,7 @@ import { Products } from "types/product";
 export class MailService {
   private http = inject(HttpClient);
 
-  registerUser(products: Products) {
+  sendProducts(products: Products) {
     return this.http.post(`${environment.host}/email/send/`, products);
   }
 }
