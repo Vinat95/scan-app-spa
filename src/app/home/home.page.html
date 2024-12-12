@@ -11,7 +11,7 @@
   >
     <!-- Centered Title -->
     <div class="form-title">
-      <p>Inserisci i dati</p>
+      <p>Inserisci i dati del prodotto</p>
     </div>
 
     <ion-select
@@ -85,8 +85,8 @@
     <!-- Scan Button Section -->
     <ion-row class="ion-text-center">
       <ion-col>
-        <ion-button expand="full" (click)="startScanner()">
-          <ion-icon name="Bricoscan" slot="start"></ion-icon> Inizia Scansione
+        <ion-button expand="full" shape="round" (click)="startScanner()">
+          <ion-icon name="scan" slot="start"></ion-icon> Inizia Scansione
         </ion-button>
       </ion-col>
     </ion-row>
@@ -96,6 +96,7 @@
       <ion-col>
         <ion-button
           expand="full"
+          shape="round"
           color="warning"
           class="add-product-button"
           [disabled]="form.invalid"
