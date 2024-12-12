@@ -84,16 +84,12 @@
 
     <!-- Scan Button Section -->
     <ion-row class="ion-text-center">
-      <ion-col>
+      <ion-col size="6">
         <ion-button expand="full" shape="round" (click)="startScanner()">
-          <ion-icon name="scan" slot="start"></ion-icon> Inizia Scansione
+          <ion-icon name="scan" slot="start"></ion-icon> Scan
         </ion-button>
       </ion-col>
-    </ion-row>
-
-    <!-- Add Product Button -->
-    <ion-row class="ion-text-center">
-      <ion-col>
+      <ion-col size="6">
         <ion-button
           expand="full"
           shape="round"
@@ -103,7 +99,6 @@
           (click)="addProduct()"
         >
           <ion-icon name="add-circle-outline" slot="start"></ion-icon> Aggiungi
-          Prodotto
         </ion-button>
       </ion-col>
     </ion-row>

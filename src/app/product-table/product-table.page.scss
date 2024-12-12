@@ -1,117 +1,37 @@
-@keyframes explode {
-  0% {
-    transform: scale(1);
-    opacity: 1;
-  }
-  30% {
-    transform: scale(0.8) rotate(10deg);
-    opacity: 0.8;
-  }
-  60% {
-    transform: scale(0.6) rotate(-10deg);
-    opacity: 0.5;
-  }
-  100% {
-    transform: scale(0) rotate(360deg);
-    opacity: 0;
-  }
+.product-count {
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  margin: 16px 0;
+  padding: 10px;
+  background-color: #f0f8ff; /* Un colore di sfondo chiaro per far risaltare il messaggio */
+  border-radius: 8px;
+  color: #2f4f4f; /* Colore del testo */
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
+  /* Animazione di typing senza delay */
+  animation: typing 1s steps(60) forwards; /* Aggiungi animazione typing senza delay */
+  /* Aggiungi flexbox per allineare l'icona e il testo sulla stessa riga */
+  display: flex;
+  align-items: center; /* Allinea verticalmente l'icona e il testo */
+  justify-content: center; /* Centra il contenuto orizzontalmente */
+  width: fit-content; /* Aggiunto per permettere il controllo del testo */
+  overflow: hidden; /* Nasconde il testo in eccesso mentre la scrittura si anima */
+  white-space: nowrap; /* Impedisce che il testo vada a capo */
 }
 
-@keyframes appear {
+@keyframes typing {
   from {
-    opacity: 0;
-    scale: 0.5;
+    width: 0;
   }
   to {
-    opacity: 1;
-    scale: 1;
+    width: 100%;
   }
 }
 
-.product-card {
-  margin: 20px;
-  padding: 20px;
-  border-radius: 20px; /* Angoli arrotondati per un look morbido */
-  background: linear-gradient(135deg, #76c7c0, #3b8c52); /* Gradiente più sofisticato */
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1); /* Ombra morbida con effetto galleggiante */
-  position: relative;
-  animation: appear linear;
-  animation-timeline: view();
-  animation-range: entry 0% cover 40%;
-  transition: all 0.4s ease-out; /* Transizione per un effetto più fluido */
-  transform-origin: center;
-}
-
-
-.product-card.removing {
-  animation: explode 1s forwards ease-out;
-  pointer-events: none;
-}
-
-.product-card .card-content {
-  opacity: 1;
-  transition: opacity 0.3s ease-out;
-}
-
-.product-card::before {
-  content: '';
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  right: 10px;
-  bottom: 10px;
-  border-radius: 15px;
-  border: 2px solid rgba(255, 255, 255, 0.4); /* Contorno delicato */
-  pointer-events: none;
-}
-
-.product-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  pointer-events: none;
-}
-
-.shop-name {
-  text-align: center;
-  padding: 20px 25px;
-  margin-bottom: 20px;
-  border-radius: 12px;
-  font-weight: bold;
-  font-size: 32px;
-  color: #ffffff;
-  background: linear-gradient(135deg, #76c7c0, #3b8c52);
-  text-shadow: 2px 2px 6px rgba(0, 0, 0, 0.4);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  transition: background 0.3s ease-in-out;
-}
-
-
-.bold-text {
-  font-size: 19px;
-  font-weight: bold;
-}
-
-ion-card-header {
-  padding: 0;
-}
-
-ion-card-content {
-  font-size: 14px;
-}
-
-ion-item {
-  margin-bottom: 10px;
-  border-radius: 8px;
-  background-color: #ffffff;
-  padding: 2px;
+.product-count ion-icon {
+  margin-right: 8px;
+  color: #00796b;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .noProduct {
@@ -144,46 +64,55 @@ ion-item {
   margin-top: 2rem;
 }
 
-
-.product-count {
-  font-size: 18px;
-  font-weight: bold;
-  text-align: center;
-  margin: 16px 0;
+/* Stile per l'intera lista */
+ion-list {
+  margin: 20px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Ombra per un look moderno */
   padding: 10px;
-  background-color: #f0f8ff; /* Un colore di sfondo chiaro per far risaltare il messaggio */
-  border-radius: 8px;
-  color: #2f4f4f; /* Colore del testo */
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
-  
-  /* Animazione di typing senza delay */
-  animation: typing 1s steps(60) forwards; /* Aggiungi animazione typing senza delay */
-
-  /* Aggiungi flexbox per allineare l'icona e il testo sulla stessa riga */
-  display: flex;
-  align-items: center; /* Allinea verticalmente l'icona e il testo */
-  justify-content: center; /* Centra il contenuto orizzontalmente */
-  
-  width: fit-content; /* Aggiunto per permettere il controllo del testo */
-  overflow: hidden; /* Nasconde il testo in eccesso mentre la scrittura si anima */
-  white-space: nowrap; /* Impedisce che il testo vada a capo */
+}
+ion-item {
+  border-bottom: 2px solid black; /* Linea nera più visibile */
 }
 
-@keyframes typing {
-  from {
-    width: 0;
+/* Personalizzazione del testo */
+ion-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000; /* Colore leggibile */
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1); /* Leggero effetto di ombra */
+}
+
+ion-item-sliding.removing {
+  animation: explode 1s forwards ease-out;
+  pointer-events: none;
+}
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+    opacity: 1;
   }
-  to {
-    width: 100%;
+  30% {
+    transform: scale(0.8) rotate(10deg);
+    opacity: 0.8;
+  }
+  60% {
+    transform: scale(0.6) rotate(-10deg);
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(0) rotate(360deg);
+    opacity: 0;
   }
 }
 
-.product-count ion-icon {
-  margin-right: 8px;
-  color: #00796b; /* Colore dell'icona */
-  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Aggiungi un'ombra all'icona */
+
+ion-label p{
+  color: #333;
 }
 
-
-
-
+ion-label span{
+  gap: 3;
+  color: #666666;
+}
