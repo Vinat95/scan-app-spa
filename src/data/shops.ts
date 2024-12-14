@@ -29,6 +29,9 @@ export const Insegne: Insignia[] = [
     name: "BriCook",
   },
   {
-    name: " CFadda Fai da te",
+    name: "CFadda Fai da te",
+  },
+  {
+    name: "Altro",
   },
 ];
