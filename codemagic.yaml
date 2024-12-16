@@ -19,17 +19,20 @@ workflows:
       - name: Build IPA
         script: |
           cd ios/App
+          pod install
           xcodebuild \
             -workspace App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
             -archivePath $HOME/build/App.xcarchive \
+            DEVELOPMENT_TEAM="YOUR_TEAM_ID" \
+            CODE_SIGN_IDENTITY="Apple Development" \
             archive
           xcodebuild \
             -exportArchive \
             -archivePath $HOME/build/App.xcarchive \
-            -exportOptionsPlist exportOptions.plist \
+            -exportOptionsPlist ios/App/exportOptions.plist \
             -exportPath $HOME/build/IPA
     artifacts:
       - $HOME/build/IPA/*.ipa
