@@ -10,7 +10,7 @@ workflows:
     scripts:
       - name: Installazione dipendenze
         script: |
-          npm install
+          npm install --force
       - name: Costruzione del progetto Ionic
         script: |
           ionic build --prod
