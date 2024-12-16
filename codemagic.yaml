@@ -1,0 +1,34 @@
+workflows:
+  build-ipa:
+    name: Build iOS .ipa
+    max_build_duration: 60 # Durata massima della build in minuti
+    environment:
+      vars:
+        FLAVOR: "production"
+      node: latest
+      xcode: latest
+    scripts:
+      - name: Installazione dipendenze
+        script: |
+          npm install
+      - name: Costruzione del progetto Ionic
+        script: |
+          ionic build --prod
+          npx cap sync ios
+      - name: Build IPA
+        script: |
+          cd ios/App
+          xcodebuild \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -sdk iphoneos \
+            -configuration Release \
+            -archivePath $HOME/build/App.xcarchive \
+            archive
+          xcodebuild \
+            -exportArchive \
+            -archivePath $HOME/build/App.xcarchive \
+            -exportOptionsPlist exportOptions.plist \
+            -exportPath $HOME/build/IPA
+    artifacts:
+      - $HOME/build/IPA/*.ipa
