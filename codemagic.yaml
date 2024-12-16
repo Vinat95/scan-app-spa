@@ -14,6 +14,7 @@ workflows:
       - name: Costruzione del progetto Ionic
         script: |
           ionic build --prod
+           npx cap add ios
           npx cap sync ios
       - name: Build IPA
         script: |
