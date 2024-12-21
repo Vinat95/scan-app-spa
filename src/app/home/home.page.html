@@ -102,6 +102,18 @@
         </ion-button>
       </ion-col>
     </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-button
+          expand="full"
+          shape="round"
+          [disabled]="disablePhotoButton()"
+          (click)="takePhoto()"
+        >
+          <ion-icon name="camera-outline" slot="start"></ion-icon> Foto
+        </ion-button>
+      </ion-col>
+    </ion-row>
   </div>
   <ion-row class="scanner-buttons" *ngIf="scanActive">
     <ion-col class="ion-no-padding">

@@ -1,4 +1,4 @@
-export type Product={
+export type Product = {
   shopName: string;
   userCode: string;
   ean: string;
@@ -6,7 +6,8 @@ export type Product={
   note: string;
   inPromo: boolean;
   date: Date;
-}
+  photos: Array<string>;
+};
 
 export type Products = {
   products: Product[];

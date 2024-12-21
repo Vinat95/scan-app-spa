@@ -1,17 +1,18 @@
-import { Component, OnDestroy} from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { Component, OnDestroy } from "@angular/core";
+import { FormArray, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { BarcodeScanner } from "@capacitor-community/barcode-scanner";
 import { Prodotti } from "src/data/source";
 import { ToastService } from "../services/toast.service";
 import { Insegne } from "src/data/shops";
 import { Insignia } from "types/shops";
+import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 
 @Component({
   selector: "app-home",
   templateUrl: "home.page.html",
   styleUrls: ["home.page.scss"],
 })
-export class HomePage implements OnDestroy{
+export class HomePage implements OnDestroy {
   remainingChars: number = 250; //lunghezza massima del campo note
   shopNames: Insignia[] = Insegne;
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
@@ -29,6 +30,7 @@ export class HomePage implements OnDestroy{
       ean: ["", [Validators.required, Validators.pattern(/^\d{13}$/)]],
       inPromo: [false], // Campo toggle per la promozione
       date: [null],
+      photos: this.fb.array([]),
     });
 
     // Monitora i cambiamenti nel campo delle note
@@ -36,37 +38,40 @@ export class HomePage implements OnDestroy{
       this.remainingChars = 250 - value.length;
     });
   }
-  
+
   getEanErrorText(): string {
     const eanControl = this.form.get("ean");
-  
+
     if (!eanControl) return "";
-  
+
     // Se il campo è vuoto e non è stato toccato, non mostriamo errori
     if (!eanControl.value && eanControl.pristine) {
       return ""; // Nessun errore se non è stato modificato e il campo è vuoto
     }
-  
+
     // Caso di errore: campo obbligatorio
     if (eanControl.invalid && eanControl.hasError("required")) {
       return "Il codice ean è obbligatorio";
     }
-  
+
     // Caso di errore: formato non valido (13 cifre numeriche)
     // Questo errore deve comparire sia quando si scrive nel campo che quando si tocca fuori e si ritorna
-    if (eanControl.invalid || eanControl.hasError("pattern") ) {
+    if (eanControl.invalid || eanControl.hasError("pattern")) {
       return "Il codice ean ha bisogno di 13 cifre numeriche";
     }
-  
+
     return "";
   }
-  
+
+  disablePhotoButton(): boolean {
+    return this.form.get("userCode")?.value === "";
+  }
+
   async startScanner() {
     const allowed = await this.checkPermission();
     if (allowed) {
       this.scanActive = true;
       const result = await BarcodeScanner.startScan();
-      console.log("scan: ", result);
       if (result.hasContent) {
         this.result = result.content;
         this.form.patchValue({
@@ -74,6 +79,21 @@ export class HomePage implements OnDestroy{
         });
         this.scanActive = false;
       }
+    }
+  }
+
+  async takePhoto() {
+    const image = await Camera.getPhoto({
+      quality: 90, // Qualità dell'immagine
+      resultType: CameraResultType.DataUrl, // Tipo di risultato: Base64, URI, ecc.
+      source: CameraSource.Camera, // Usa la fotocamera
+    });
+
+    // Ora hai l'immagine sotto forma di data URL
+    if (image.dataUrl) {
+      (this.form.get("photos") as FormArray).push(
+        this.fb.control(image.dataUrl)
+      );
     }
   }
 
