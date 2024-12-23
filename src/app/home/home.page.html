@@ -82,6 +82,14 @@
       formControlName="ean"
     ></ion-input>
 
+    @if (hasPhotos()) {
+    <ion-row>
+      <ion-col size="3" *ngFor="let photo of getPhotos(); let i = index">
+        <ion-img [src]="getPhoto(i)" [alt]="'Photo' + i"></ion-img>
+      </ion-col>
+    </ion-row>
+    }
+
     <!-- Scan Button Section -->
     <ion-row class="ion-text-center">
       <ion-col size="6">

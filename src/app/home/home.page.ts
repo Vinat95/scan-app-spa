@@ -67,6 +67,21 @@ export class HomePage implements OnDestroy {
     return this.form.get("userCode")?.value === "";
   }
 
+  //Le foto ci sono?
+  hasPhotos(): boolean {
+    return (this.form.get("photos") as FormArray).length > 0;
+  }
+
+  //Ottiene l'i-esima foto
+  getPhoto(index: number): string {
+    return (this.form.get("photos") as FormArray).at(index).value;
+  }
+
+  //Ottiene l'array delle foto per l'html
+  getPhotos() {
+    return (this.form.get("photos") as FormArray).controls;
+  }
+
   async startScanner() {
     const allowed = await this.checkPermission();
     if (allowed) {
