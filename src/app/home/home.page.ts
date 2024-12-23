@@ -65,7 +65,9 @@ export class HomePage implements OnDestroy {
   }
 
   disablePhotoButton(): boolean {
-    return this.form.get("userCode")?.value === "";
+    return (
+      this.form.get("userCode")?.value === "" || this.photoUrls.length >= 3
+    );
   }
 
   //Le foto ci sono?
@@ -122,6 +124,17 @@ export class HomePage implements OnDestroy {
 
       (this.form.get("photos") as FormArray).push(this.fb.control(file));
     }
+  }
+
+  removePhoto(index: number) {
+    // Revoca l'URL temporaneo per liberare memoria
+    URL.revokeObjectURL(this.photoUrls[index]);
+
+    // Rimuovi la foto dall'array di URL temporanei
+    this.photoUrls.splice(index, 1);
+
+    // Rimuovi la foto dal Form
+    (this.form.get("photos") as FormArray).removeAt(index);
   }
 
   convertBase64ToBlob(base64: string, mimeType: string): Blob {
