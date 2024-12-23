@@ -22,7 +22,9 @@ export class ProductTablePage implements OnInit {
     private navCtrl: NavController
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    // console.log('Photos',this.productsList.products[0].photos); Esistono
+  }
 
   async confirmRemoveProduct(product: Product) {
     const alert = await this.alertController.create({

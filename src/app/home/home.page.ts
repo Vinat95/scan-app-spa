@@ -20,7 +20,6 @@ export class HomePage implements OnDestroy {
   result = "";
   successMessage: string = ""; // Variabile per gestire il messaggio di successo
   scanActive = false;
-  // products: Product[] = Prodotti;
 
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
@@ -74,17 +73,6 @@ export class HomePage implements OnDestroy {
   hasPhotos(): boolean {
     return (this.form.get("photos") as FormArray).length > 0;
   }
-
-  //Ottiene l'i-esima foto
-  // getPhotoUrl(index: number): string {
-  //   const file = (this.form.get("photos") as FormArray).at(index).value;
-  //   return file ? URL.createObjectURL(file) : "";
-  // }
-
-  //Ottiene l'array delle foto per l'html
-  // getPhotos() {
-  //   return (this.form.get("photos") as FormArray).controls;
-  // }
 
   async startScanner() {
     const allowed = await this.checkPermission();
@@ -179,7 +167,6 @@ export class HomePage implements OnDestroy {
         date: currentDate,
       });
 
-      // this.products.push(this.form.value);
       Prodotti.products.push({ ...this.form.value });
       this.toastService.showToast({
         type: "success",
