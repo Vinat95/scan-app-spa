@@ -15,6 +15,7 @@ import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 export class HomePage implements OnDestroy {
   remainingChars: number = 250; //lunghezza massima del campo note
   shopNames: Insignia[] = Insegne;
+  photoUrls: string[] = [];
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
   result = "";
   successMessage: string = ""; // Variabile per gestire il messaggio di successo
@@ -73,14 +74,15 @@ export class HomePage implements OnDestroy {
   }
 
   //Ottiene l'i-esima foto
-  getPhoto(index: number): string {
-    return (this.form.get("photos") as FormArray).at(index).value;
-  }
+  // getPhotoUrl(index: number): string {
+  //   const file = (this.form.get("photos") as FormArray).at(index).value;
+  //   return file ? URL.createObjectURL(file) : "";
+  // }
 
   //Ottiene l'array delle foto per l'html
-  getPhotos() {
-    return (this.form.get("photos") as FormArray).controls;
-  }
+  // getPhotos() {
+  //   return (this.form.get("photos") as FormArray).controls;
+  // }
 
   async startScanner() {
     const allowed = await this.checkPermission();
@@ -106,10 +108,31 @@ export class HomePage implements OnDestroy {
 
     // Ora hai l'immagine sotto forma di data URL
     if (image.dataUrl) {
-      (this.form.get("photos") as FormArray).push(
-        this.fb.control(image.dataUrl)
+      // Converti il base64 in un Blob
+      const blob = this.convertBase64ToBlob(image.dataUrl, "image/jpeg");
+
+      // Crea un oggetto File dal Blob
+      const file = new File(
+        [blob],
+        `${this.form.get("userCode")?.value}-${Date.now()}`,
+        { type: "image/jpeg" }
       );
+      const photoUrl = URL.createObjectURL(file);
+      this.photoUrls.push(photoUrl);
+
+      (this.form.get("photos") as FormArray).push(this.fb.control(file));
     }
+  }
+
+  convertBase64ToBlob(base64: string, mimeType: string): Blob {
+    const byteCharacters = atob(base64.split(",")[1]);
+    const byteArrays = [];
+    for (let offset = 0; offset < byteCharacters.length; offset++) {
+      byteArrays.push(byteCharacters.charCodeAt(offset));
+    }
+
+    const byteArray = new Uint8Array(byteArrays);
+    return new Blob([byteArray], { type: mimeType });
   }
 
   async checkPermission() {
@@ -159,6 +182,10 @@ export class HomePage implements OnDestroy {
         ean: "",
         inPromo: false,
       });
+      (this.form.get("photos") as FormArray).clear();
+      //Svuota gli url temporanei
+      this.photoUrls.forEach((url) => URL.revokeObjectURL(url));
+      this.photoUrls = [];
     } else {
       console.log("Il modulo non è valido");
     }
