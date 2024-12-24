@@ -10,6 +10,7 @@ import { LoadingService } from "./services/loading.service";
 import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
 import { ToastService } from "./services/toast.service";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
+import { S3Service } from "./services/s3.service";
 
 @NgModule({
   declarations: [AppComponent],
@@ -21,6 +22,7 @@ import { ErrorInterceptor } from "./interceptors/error.interceptor";
   ],
   providers: [
     MailService,
+    S3Service,
     LoadingService,
     ToastService,
     {

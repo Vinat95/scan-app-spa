@@ -4,6 +4,8 @@ import { Prodotti } from "src/data/source";
 import { AlertController, NavController } from "@ionic/angular";
 import { MailService } from "../services/mail.service";
 import { ToastService } from "../services/toast.service";
+import { S3Service } from "../services/s3.service";
+import { firstValueFrom } from "rxjs";
 
 @Component({
   selector: "app-product-table",
@@ -18,6 +20,7 @@ export class ProductTablePage implements OnInit {
   constructor(
     private alertController: AlertController,
     private mailService: MailService,
+    private s3Service: S3Service,
     private toastService: ToastService,
     private navCtrl: NavController
   ) {}
@@ -67,6 +70,29 @@ export class ProductTablePage implements OnInit {
         });
       }, 1000); // timeout con la durata dell'animazione
     }
+  }
+
+  async uploadPhotosAndSendEmail() {
+    for (const product of this.productsList.products) {
+      if (product.photos.length > 0) {
+        const formData = new FormData();
+        // Aggiungi tutte le foto al FormData
+        product.photos.forEach((photo) => {
+          formData.append("files", photo);
+        });
+        // Usa firstValueFrom per ottenere la risposta dell'upload in modo asincrono
+        const response: any = await firstValueFrom(
+          this.s3Service.uploadImage(formData)
+        );
+        // Aggiorna l'array di foto con gli URL ritornati
+        product.photos = response.urls;
+      } else {
+        product.photos = []; // Se non ci sono file, lascia l'array vuoto
+      }
+    }
+
+    // Una volta completati tutti gli upload, invia la mail
+    this.sendProducts();
   }
 
   sendProducts() {

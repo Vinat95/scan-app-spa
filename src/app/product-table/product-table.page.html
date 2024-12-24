@@ -11,7 +11,7 @@
 
     <!-- Pulsante per inviare i prodotti -->
     <div class="center-button">
-      <ion-button expand="block" color="primary" (click)="sendProducts()">
+      <ion-button expand="block" color="primary" (click)="uploadPhotosAndSendEmail()">
         <ion-icon name="mail-outline" slot="start"></ion-icon>
         Invia
       </ion-button>
@@ -23,15 +23,18 @@
         *ngFor="let prod of productsList.products"
         [class.removing]="removingProducts.has(prod)"
       >
-      <ion-item>
-        <ion-label>
-          <p><strong>Ean:</strong> <span> {{ prod.ean }}</span></p>
-          <p><strong>Prezzo:</strong> <span> {{ prod.price }}€</span></p>
-          <p><strong>PROMO:</strong> <span> {{ prod.inPromo ? 'Si' : 'No' }}</span></p>
-          <p><strong>Note:</strong> <span> {{ prod.note }}</span></p>
-          <p><strong>Data:</strong> <span> {{ prod.date }}</span></p>
-        </ion-label>
-      </ion-item>
+        <ion-item>
+          <ion-label>
+            <p><strong>Ean:</strong> <span> {{ prod.ean }}</span></p>
+            <p><strong>Prezzo:</strong> <span> {{ prod.price }}€</span></p>
+            <p>
+              <strong>PROMO:</strong>
+              <span> {{ prod.inPromo ? 'Si' : 'No' }}</span>
+            </p>
+            <p><strong>Note:</strong> <span> {{ prod.note }}</span></p>
+            <p><strong>Data:</strong> <span> {{ prod.date }}</span></p>
+          </ion-label>
+        </ion-item>
 
         <!-- Pulsante per eliminare il prodotto -->
         <ion-item-options side="end">

@@ -39,6 +39,7 @@
       labelPlacement="floating"
       errorText="Il codice utente è obbligatorio"
       formControlName="userCode"
+      [disabled]="hasPhotos()"
     ></ion-input>
 
     <ion-input
