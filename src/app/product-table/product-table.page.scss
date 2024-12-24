@@ -116,3 +116,17 @@ ion-label span{
   gap: 3;
   color: #666666;
 }
+.price-container {
+  display: flex;
+  align-items: center;
+  gap: 10px; /* Spazio tra gli elementi */
+}
+
+.price-container ion-input {
+  max-width: 80px; /* Larghezza massima dell'input */
+  text-align: right; /* Allinea il testo a destra */
+}
+
+.price-container ion-icon {
+  font-size: 20px; /* Dimensione delle icone */
+}

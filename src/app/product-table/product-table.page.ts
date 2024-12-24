@@ -15,6 +15,7 @@ import { firstValueFrom } from "rxjs";
 export class ProductTablePage implements OnInit {
   removingProducts = new Set<Product>();
   isLoading: boolean = false;
+  editingPriceProduct: Product | null = null;
   productsList: Products = Prodotti;
 
   constructor(
@@ -112,5 +113,24 @@ export class ProductTablePage implements OnInit {
         });
       },
     });
+  }
+
+  enableEditPrice(product: Product) {
+    this.editingPriceProduct = product; // Abilita la modifica per il prodotto
+  }
+
+  isEditingPrice(product: Product): boolean {
+    return this.editingPriceProduct === product; // Verifica se è in modifica
+  }
+
+  savePrice(product: Product) {
+    if (this.editingPriceProduct === product) {
+      this.editingPriceProduct = null; // Disabilita la modifica
+      this.toastService.showToast({
+        type: "success",
+        message: `Prezzo del prodotto ${product.ean} aggiornato a ${product.price}€!`,
+      });
+      // Se necessario, aggiorna anche il backend qui
+    }
   }
 }

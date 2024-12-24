@@ -11,7 +11,11 @@
 
     <!-- Pulsante per inviare i prodotti -->
     <div class="center-button">
-      <ion-button expand="block" color="primary" (click)="uploadPhotosAndSendEmail()">
+      <ion-button
+        expand="block"
+        color="primary"
+        (click)="uploadPhotosAndSendEmail()"
+      >
         <ion-icon name="mail-outline" slot="start"></ion-icon>
         Invia
       </ion-button>
@@ -26,7 +30,27 @@
         <ion-item>
           <ion-label>
             <p><strong>Ean:</strong> <span> {{ prod.ean }}</span></p>
-            <p><strong>Prezzo:</strong> <span> {{ prod.price }}€</span></p>
+            <div class="price-container">
+              <strong>Prezzo:</strong>
+              <ion-input
+                type="number"
+                [(ngModel)]="prod.price"
+                [disabled]="!isEditingPrice(prod)"
+              ></ion-input>
+              <p>€</p>
+              <ion-icon
+                name="pencil"
+                (click)="enableEditPrice(prod)"
+                *ngIf="!isEditingPrice(prod)"
+                style="cursor: pointer; color: green"
+              ></ion-icon>
+              <ion-icon
+                name="checkmark"
+                (click)="savePrice(prod)"
+                *ngIf="isEditingPrice(prod)"
+                style="cursor: pointer; color: green"
+              ></ion-icon>
+            </div>
             <p>
               <strong>PROMO:</strong>
               <span> {{ prod.inPromo ? 'Si' : 'No' }}</span>
