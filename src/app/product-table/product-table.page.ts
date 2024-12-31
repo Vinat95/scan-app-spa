@@ -17,6 +17,8 @@ export class ProductTablePage implements OnInit {
   isLoading: boolean = false;
   editingPriceProduct: Product | null = null;
   productsList: Products = Prodotti;
+  photoUrls: string[] = [];
+  expandedProduct: any = null; // Tiene traccia del prodotto selezionato
 
   constructor(
     private alertController: AlertController,
@@ -27,7 +29,29 @@ export class ProductTablePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    // console.log('Photos',this.productsList.products[0].photos); Esistono
+    //console.log("Photos", this.productsList.products); //Esistono
+  }
+
+  togglePhotoGallery(product: any): void {
+    //Pulizia pre apertura
+    this.revokePhotoUrls(this.photoUrls);
+    // Se il prodotto è già selezionato, chiudi la galleria
+    if (this.expandedProduct === product) {
+      this.expandedProduct = null;
+    } else {
+      product.photos.forEach((photo: File, index: number) => {
+        this.photoUrls[index] = URL.createObjectURL(photo);
+      });
+      // Altrimenti, apri la galleria per il prodotto selezionato
+      this.expandedProduct = product;
+    }
+  }
+
+  revokePhotoUrls(photoUrls: Array<string>) {
+    this.photoUrls.forEach((url: string, index: number) => {
+      URL.revokeObjectURL(this.photoUrls[index]);
+    });
+    this.photoUrls = [];
   }
 
   async confirmRemoveProduct(product: Product) {
@@ -60,6 +84,9 @@ export class ProductTablePage implements OnInit {
     if (index > -1) {
       // Aggiungi la classe "removing" per avviare l'animazione
       this.removingProducts.add(product);
+
+      // Revoca gli URL temporanei prima di rimuovere il prodotto
+      this.revokePhotoUrls(this.photoUrls);
 
       // Attendi l'animazione prima di rimuovere il prodotto
       setTimeout(() => {

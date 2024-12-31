@@ -1,7 +1,7 @@
 <ion-content [fullscreen]="true">
   <div class="view" [style.margin-top]="'5rem'">
     <!-- Controllo se ci sono prodotti -->
-    @if (productsList.products.length >0) {
+    @if (productsList.products.length > 0) {
     <div class="product-count">
       <ion-icon name="checkmark-circle" size="large"></ion-icon>
       Hai rilevato {{ productsList.products.length === 1 ?
@@ -31,13 +31,12 @@
           <ion-label>
             <p><strong>Ean:</strong> <span> {{ prod.ean }}</span></p>
             <div class="price-container">
-              <strong>Prezzo:</strong>
+              <strong>Prezzo(€):</strong>
               <ion-input
                 type="number"
                 [(ngModel)]="prod.price"
                 [disabled]="!isEditingPrice(prod)"
               ></ion-input>
-              <p>€</p>
               <ion-icon
                 name="pencil"
                 (click)="enableEditPrice(prod)"
@@ -57,7 +56,31 @@
             </p>
             <p><strong>Note:</strong> <span> {{ prod.note }}</span></p>
             <p><strong>Data:</strong> <span> {{ prod.date }}</span></p>
+
+            <!-- Sezione immagini visibile solo per il prodotto selezionato -->
+            <div *ngIf="expandedProduct === prod" class="image-gallery">
+              <p><strong>Immagini:</strong></p>
+              <div class="images">
+                <img
+                  *ngFor="let photo of photoUrls"
+                  [src]="photo"
+                  alt="Foto prodotto"
+                  class="product-photo"
+                />
+              </div>
+            </div>
           </ion-label>
+
+          <!-- Bottone fotocamera -->
+          <ion-button
+            fill="clear"
+            slot="end"
+            class="camera-button"
+            (click)="togglePhotoGallery(prod)"
+            *ngIf="prod.photos && prod.photos.length > 0"
+          >
+            <ion-icon name="camera"></ion-icon>
+          </ion-button>
         </ion-item>
 
         <!-- Pulsante per eliminare il prodotto -->
@@ -68,8 +91,7 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-
-    }@else {
+      } @else {
     <div class="noProduct">
       <ion-icon name="file-tray-stacked-outline"></ion-icon>
       Nessun Prodotto Aggiunto

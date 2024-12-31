@@ -11,7 +11,7 @@
   >
     <!-- Centered Title -->
     <div class="form-title">
-      <p>Inserisci i dati del prodotto</p>
+      <p>Inserisci prodotto</p>
     </div>
 
     <ion-select
@@ -37,7 +37,7 @@
       fill="solid"
       label="Utente *"
       labelPlacement="floating"
-      errorText="Il codice utente è obbligatorio"
+      errorText="Il codice utente è obbligatorio (deve essere 2 caratteri)"
       formControlName="userCode"
       [disabled]="hasPhotos()"
     ></ion-input>
@@ -76,12 +76,12 @@
       type="text"
       inputmode="numeric"
       fill="solid"
-      label="Codice ean*"
+      label="Codice Ean13*"
       labelPlacement="floating"
-      helperText="Il codice scansionato apparirà qui, ed ha bisogno di 13 cifre numeriche"
       [errorText]="getEanErrorText()"
       formControlName="ean"
-    ></ion-input>
+      ></ion-input>
+      <!-- helperText="Il codice scansionato apparirà qui, ed ha bisogno di 13 cifre numeriche" -->
 
     @if (hasPhotos()) {
     <ion-row>
@@ -111,12 +111,10 @@
         <ion-button
           expand="full"
           shape="round"
-          color="warning"
-          class="add-product-button"
-          [disabled]="form.invalid"
-          (click)="addProduct()"
+          [disabled]="disablePhotoButton()"
+          (click)="takePhoto()"
         >
-          <ion-icon name="add-circle-outline" slot="start"></ion-icon> Aggiungi
+          <ion-icon name="camera-outline"  slot="start"></ion-icon> Foto
         </ion-button>
       </ion-col>
     </ion-row>
@@ -125,10 +123,12 @@
         <ion-button
           expand="full"
           shape="round"
-          [disabled]="disablePhotoButton()"
-          (click)="takePhoto()"
+          color="warning"
+          class="add-product-button"
+          [disabled]="form.invalid"
+          (click)="addProduct()"
         >
-          <ion-icon name="camera-outline" slot="start"></ion-icon> Foto
+          <ion-icon name="add-circle-outline" slot="start"></ion-icon> Aggiungi
         </ion-button>
       </ion-col>
     </ion-row>

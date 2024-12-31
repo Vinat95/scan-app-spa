@@ -19,6 +19,25 @@
   white-space: nowrap; /* Impedisce che il testo vada a capo */
 }
 
+.image-gallery {
+  margin-top: 1rem;
+}
+
+.images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.product-photo {
+  width: 100px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+
 @keyframes typing {
   from {
     width: 0;

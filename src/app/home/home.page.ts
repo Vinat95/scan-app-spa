@@ -6,6 +6,7 @@ import { ToastService } from "../services/toast.service";
 import { Insegne } from "src/data/shops";
 import { Insignia } from "types/shops";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
+import { convertBase64ToBlob } from "../helpers/base64toblob";
 
 @Component({
   selector: "app-home",
@@ -24,7 +25,7 @@ export class HomePage implements OnDestroy {
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
-      userCode: ["", [Validators.required]],
+      userCode: ["", [Validators.required, Validators.maxLength(2), Validators.minLength(2)]],
       price: [null, [Validators.required]], // Campo prezzo richiesto
       note: ["", [Validators.maxLength(250)]], // Campo di testo facoltativo
       ean: ["", [Validators.required, Validators.pattern(/^\d{13}$/)]],
@@ -99,7 +100,7 @@ export class HomePage implements OnDestroy {
     // Ora hai l'immagine sotto forma di data URL
     if (image.dataUrl) {
       // Converti il base64 in un Blob
-      const blob = this.convertBase64ToBlob(image.dataUrl, "image/jpeg");
+      const blob = convertBase64ToBlob(image.dataUrl, "image/jpeg");
 
       // Crea un oggetto File dal Blob
       const file = new File(
@@ -125,16 +126,6 @@ export class HomePage implements OnDestroy {
     (this.form.get("photos") as FormArray).removeAt(index);
   }
 
-  convertBase64ToBlob(base64: string, mimeType: string): Blob {
-    const byteCharacters = atob(base64.split(",")[1]);
-    const byteArrays = [];
-    for (let offset = 0; offset < byteCharacters.length; offset++) {
-      byteArrays.push(byteCharacters.charCodeAt(offset));
-    }
-
-    const byteArray = new Uint8Array(byteArrays);
-    return new Blob([byteArray], { type: mimeType });
-  }
 
   async checkPermission() {
     const status = await BarcodeScanner.checkPermission({ force: true });
