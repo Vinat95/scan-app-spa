@@ -25,7 +25,10 @@ export class HomePage implements OnDestroy {
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
-      userCode: ["", [Validators.required, Validators.maxLength(2), Validators.minLength(2)]],
+      userCode: [
+        "",
+        [Validators.required, Validators.maxLength(2), Validators.minLength(2)],
+      ],
       price: [null, [Validators.required]], // Campo prezzo richiesto
       note: ["", [Validators.maxLength(250)]], // Campo di testo facoltativo
       ean: ["", [Validators.required, Validators.pattern(/^\d{13}$/)]],
@@ -126,7 +129,6 @@ export class HomePage implements OnDestroy {
     (this.form.get("photos") as FormArray).removeAt(index);
   }
 
-
   async checkPermission() {
     const status = await BarcodeScanner.checkPermission({ force: true });
     return status.granted;
@@ -145,17 +147,27 @@ export class HomePage implements OnDestroy {
   addProduct() {
     if (this.form.valid) {
       // Ottieni la data e l'ora correnti nel formato desiderato
-      const currentDate = new Date().toLocaleString("it-IT", {
-        day: "2-digit",
-        month: "2-digit",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        hour12: false, // Utilizza il formato 24 ore
-      });
+      const currentDate = new Date();
+      const formattedDate = `${currentDate.getFullYear().toString().slice(2)}${(
+        currentDate.getMonth() + 1
+      )
+        .toString()
+        .padStart(2, "0")}${currentDate
+        .getDate()
+        .toString()
+        .padStart(2, "0")}, ${currentDate
+        .getHours()
+        .toString()
+        .padStart(2, "0")}${currentDate
+        .getMinutes()
+        .toString()
+        .padStart(2, "0")}${currentDate
+        .getSeconds()
+        .toString()
+        .padStart(2, "0")}`;
 
       this.form.patchValue({
-        date: currentDate,
+        date: formattedDate,
       });
 
       Prodotti.products.push({ ...this.form.value });
