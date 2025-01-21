@@ -34,7 +34,8 @@ workflows:
 
       - name: Verifica la presenza di exportOptions.plist
         script: |
-          ls -alh $HOME/scan-app-spa
+          ls -alh $PWD
+          cat $PWD/exportOptions.plist
 
       - name: Firma e crea l'IPA
         script: |
@@ -49,7 +50,7 @@ workflows:
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
-            -exportOptionsPlist $HOME/scan-app-spa/exportOptions.plist \
+            -exportOptionsPlist $PWD/exportOptions.plist \
             -exportPath $PWD/build/ \
             -allowProvisioningUpdates
     artifacts:
