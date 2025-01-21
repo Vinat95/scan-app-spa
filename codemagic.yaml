@@ -7,7 +7,7 @@ workflows:
         - ios_bricoscan_signing
       vars:
         FLAVOR: "production"
-         APPLE_DEVELOPER_TEAM_ID: "$DEVELOPMENT_TEAM_ID"
+        APPLE_DEVELOPER_TEAM_ID: "$DEVELOPMENT_TEAM_ID"
       node: latest
       xcode: latest
       cocoapods: default
