@@ -20,6 +20,7 @@ workflows:
       - name: Aggiunta provisioning profile
         script: |
           npx cap add ios
+          npx capacitor-assets generate
           npx cap sync ios
       - name: Aggiunta provisioning profile
         script: |
