@@ -17,6 +17,8 @@ workflows:
       - name: Build Ionic
         script: |
           ionic build --prod
+      - name: Aggiunta provisioning profile
+        script: |
           npx cap add ios
           npx cap sync ios
       - name: Aggiunta provisioning profile
