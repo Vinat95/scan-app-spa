@@ -11,13 +11,18 @@ workflows:
       xcode: latest
       cocoapods: default
     scripts:
+      - name: Pulizia del progetto
+        script: |
+          rm -rf node_modules
+          rm -f package-lock.json
+          npm cache clean --force
       - name: Installazione dipendenze
         script: |
           npm install --force
       - name: Build Ionic
         script: |
           ionic build --prod
-      - name: Aggiunta provisioning profile
+      - name: Aggiunta ios
         script: |
           npx cap add ios
           npx capacitor-assets generate
