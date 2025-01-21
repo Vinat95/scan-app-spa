@@ -53,6 +53,12 @@ workflows:
           echo '    <string>&lt;none&gt;</string>' >> exportOptions.plist
           echo '</dict>' >> exportOptions.plist
           echo '</plist>' >> exportOptions.plist
+          if [ -f exportOptions.plist ]; then
+            echo "exportOptions.plist creato con successo!"
+          else
+            echo "Errore nella creazione di exportOptions.plist"
+            exit 1
+          fi
 
       - name: Firma e crea l'IPA
         script: |
