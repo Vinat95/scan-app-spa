@@ -53,6 +53,11 @@ workflows:
           echo '</dict>' >> exportOptions.plist
           echo '</plist>' >> exportOptions.plist
 
+      - name: Verifica la struttura delle cartelle
+        script: |
+          echo "Contenuto della directory"
+          ls -R $PWD
+
       - name: Configura certificati e provisioning
         script: |
           echo "$CERTIFICATE" | base64 -d > distribution_certificate.p12
