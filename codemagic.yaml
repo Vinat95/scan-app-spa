@@ -14,9 +14,6 @@ workflows:
       - name: Installazione dipendenze
         script: |
           npm install --force
-      - name: Generazione delle immagini con Capacitor
-        script: |
-          npx capacitor-assets generate
       - name: Build Ionic
         script: |
           ionic build --prod
