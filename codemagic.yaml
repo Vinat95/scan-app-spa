@@ -34,9 +34,6 @@ workflows:
           security import distribution_certificate.p12 -P "$CERTIFICATE_PASSWORD" -A
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
           cp distribution_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-      - name: Verifica percorso
-        script: |
-          echo "Current directory: $PWD"
       - name: Firma e crea l'IPA
         script: |
           cd ios/App
