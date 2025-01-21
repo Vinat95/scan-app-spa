@@ -1,21 +1,40 @@
 workflows:
   build-ipa:
     name: Build iOS .ipa
-    max_build_duration: 60 # Durata massima della build in minuti
+    max_build_duration: 60
     environment:
+      groups:
+        - ios_bricoscan_signing
       vars:
         FLAVOR: "production"
       node: latest
       xcode: latest
+      cocoapods: default
     scripts:
       - name: Installazione dipendenze
         script: |
           npm install --force
-      - name: Costruzione del progetto Ionic
+      - name: Generazione delle immagini con Capacitor
+        script: |
+          npx capacitor-assets generate
+      - name: Build Ionic
         script: |
           ionic build --prod
-           npx cap add ios
+          npx cap add ios
           npx cap sync ios
+      - name: Aggiunta provisioning profile
+        script: |
+          echo $PROVISIONING_PROFILE | base64 --decode > provisioning.mobileprovision
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          mv provisioning.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+      - name: Configurazione del certificato
+        script: |
+          echo $CERTIFICATE | base64 --decode > certificate.p12
+          security create-keychain -p "" build.keychain
+          security import certificate.p12 -k build.keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
+          security list-keychains -s build.keychain
+          security unlock-keychain -p "" build.keychain
+          security set-keychain-settings -lut 3600 build.keychain
       - name: Build IPA
         script: |
           cd ios/App
@@ -26,13 +45,13 @@ workflows:
             -sdk iphoneos \
             -configuration Release \
             -archivePath $HOME/build/App.xcarchive \
-            DEVELOPMENT_TEAM="YOUR_TEAM_ID" \
-            CODE_SIGN_IDENTITY="Apple Development" \
+            DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
+            CODE_SIGN_IDENTITY="Apple Distribution" \
             archive
           xcodebuild \
             -exportArchive \
             -archivePath $HOME/build/App.xcarchive \
-            -exportOptionsPlist ios/App/exportOptions.plist \
+            -exportOptionsPlist exportOptions.plist \
             -exportPath $HOME/build/IPA
     artifacts:
       - $HOME/build/IPA/*.ipa
