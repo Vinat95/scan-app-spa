@@ -60,6 +60,10 @@ workflows:
             exit 1
           fi
 
+      - name: Contenuto della cartella
+        script: |
+          ls -l $PWD/ios/App
+
       - name: Firma e crea l'IPA
         script: |
           cd ios/App
@@ -73,7 +77,7 @@ workflows:
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
-            -exportOptionsPlist $PWD/exportOptions.plist \
+            -exportOptionsPlist $PWD/ios/App/exportOptions.plist \
             -exportPath $PWD/build/ \
             -allowProvisioningUpdates
     artifacts:
