@@ -60,9 +60,10 @@ workflows:
             exit 1
           fi
 
-      - name: Contenuto della cartella
+      - name: Verifica la presenza di exportOptions.plist
         script: |
-          ls -l $PWD/ios/App
+          ls -alh $PWD
+          ls -alh $PWD/exportOptions.plist
 
       - name: Firma e crea l'IPA
         script: |
