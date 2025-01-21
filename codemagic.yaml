@@ -47,8 +47,8 @@ workflows:
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
-            -exportOptionsPlist exportOptions.plist \
+            -exportOptionsPlist $PWD/exportOptions.plist \
             -exportPath $PWD/build/ \
             -allowProvisioningUpdates
     artifacts:
-      - $HOME/build/IPA/*.ipa
+      - $PWD/build/IPA/*.ipa
