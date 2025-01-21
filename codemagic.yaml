@@ -27,36 +27,28 @@ workflows:
           npx cap add ios
           npx capacitor-assets generate
           npx cap sync ios
-      - name: Aggiunta provisioning profile
+      - name: Configura certificati e provisioning
         script: |
-          echo $PROVISIONING_PROFILE | base64 --decode > provisioning.mobileprovision
+          echo "$CERTIFICATE" | base64 -d > distribution_certificate.p12
+          echo "$PROVISIONING_PROFILE" | base64 -d > distribution_profile.mobileprovision
+          security import distribution_certificate.p12 -P "$CERTIFICATE_PASSWORD" -A
           mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          mv provisioning.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
-      - name: Configurazione del certificato
-        script: |
-          echo $CERTIFICATE | base64 --decode > certificate.p12
-          security create-keychain -p "" build.keychain
-          security import certificate.p12 -k build.keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
-          security list-keychains -s build.keychain
-          security unlock-keychain -p "" build.keychain
-          security set-keychain-settings -lut 3600 build.keychain
-      - name: Build IPA
+          cp distribution_profile.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+      - name: Firma e crea l'IPA
         script: |
           cd ios/App
-          pod install
           xcodebuild \
             -workspace App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
-            -archivePath $HOME/build/App.xcarchive \
-            DEVELOPMENT_TEAM=$DEVELOPMENT_TEAM \
-            CODE_SIGN_IDENTITY="Apple Distribution" \
-            archive
+            -allowProvisioningUpdates \
+            -archivePath $PWD/build/App.xcarchive archive
           xcodebuild \
             -exportArchive \
-            -archivePath $HOME/build/App.xcarchive \
+            -archivePath $PWD/build/App.xcarchive \
             -exportOptionsPlist exportOptions.plist \
-            -exportPath $HOME/build/IPA
+            -exportPath $PWD/build/ \
+            -allowProvisioningUpdates
     artifacts:
       - $HOME/build/IPA/*.ipa
