@@ -43,6 +43,10 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
+      - name: contenuto info.plist
+        script: |
+          cat ios/App/App/info.plist
+
       - name: Build IPA
         script: |
           xcodebuild \
