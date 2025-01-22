@@ -39,6 +39,10 @@ workflows:
         script: |
           xcode-project use-profiles
 
+      - name: Copia exportOptions.plist
+        script: |
+          cp exportOptions.plist ios/App/
+
       - name: Build IPA
         script: |
           xcodebuild \
