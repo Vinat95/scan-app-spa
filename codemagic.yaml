@@ -46,9 +46,8 @@ workflows:
 
       - name: Importa certificato
         script: |
-          echo "$CERTIFICATE_PASSWORD"
           echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
-          security import ios/App/certificate.p12 -k ~/Library/Keychains/login.keychain -P KeY1 -T /usr/bin/codesign
+          security import ios/App/certificate.p12 -k ~/Library/Keychains/login.keychain -T /usr/bin/codesign
 
       - name: Configura provisioning profile
         script: |
