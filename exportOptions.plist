@@ -11,9 +11,7 @@
         <key>$BUNDLE_IDENTIFIER</key>
         <string>$PROVISIONING_NAME</string>
     </dict>
-    <key>compileBitcode</key>
-    <false/>
-    <key>thinning</key>
-    <string>&lt;none&gt;</string>
+    <key>signingStyle</key>
+    <string>manual</string>
 </dict>
 </plist>
