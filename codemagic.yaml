@@ -45,6 +45,10 @@ workflows:
             -configuration Release \
             -allowProvisioningUpdates \
             -archivePath $PWD/build/App.xcarchive archive
+            -verbose
+          echo "Verifica se il file .xcarchive è stato creato:"
+          ls -R $PWD/build/
+
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
