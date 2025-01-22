@@ -36,30 +36,24 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
-      - name: Imposta la variabile dell'ID del team
-        script: |
-          export DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM_ID"
-
-      - name: Firma e crea l'IPA
+      - name: Build IPA
         script: |
           xcodebuild \
             -workspace ios/App/App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
-            -developmentTeam "$DEVELOPMENT_TEAM_ID" \
             -allowProvisioningUpdates \
             -archivePath $PWD/build/App.xcarchive \
             archive
 
-          echo "Contenuto della cartella build:"
-            ls -R $PWD/build
-
+      - name: Export IPA
+        script: |
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
             -exportOptionsPlist ios/App/exportOptions.plist \
-            -exportPath $PWD/build/ \
-            -allowProvisioningUpdates
+            -exportPath $PWD/build/
+
     artifacts:
       - $PWD/build/IPA/*.ipa
