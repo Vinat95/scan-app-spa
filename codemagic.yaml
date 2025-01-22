@@ -43,6 +43,10 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
+      - name: Decodifica provisioning profile
+        script: |
+          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/scanapp-provisioning.mobileprovision
+
       - name: Build IPA
         script: |
           xcodebuild \
@@ -52,8 +56,6 @@ workflows:
             -configuration Release \
             -allowProvisioningUpdates \
             -archivePath $PWD/build/App.xcarchive \
-            CODE_SIGN_IDENTITY="iPhone Distribution" \
-            PROVISIONING_PROFILE_SPECIFIER="scanapp-provisioning" \
             archive
 
       - name: Export IPA
