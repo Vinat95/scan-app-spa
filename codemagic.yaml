@@ -32,9 +32,26 @@ workflows:
           npx capacitor-assets generate
           npx cap sync ios
 
+      - name: Decodifica certificato .p12
+        script: |
+          echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
+
+      - name: Decodifica profilo di provisioning
+        script: |
+          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ios/App/scanapp-provisioning.mobileprovision
+
       - name: Copia exportOptions.plist
         script: |
           cp exportOptions.plist ios/App/
+
+      - name: Copia il profilo di provisioning
+        script: |
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp ios/App/scanapp-provisioning.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+
+      - name: Importa il certificato
+        script: |
+          security import ios/App/certificate.p12 -k ~/Library/Keychains/login.keychain -P $CERTIFICATE_PASSWORD
 
       - name: Build IPA
         script: |
