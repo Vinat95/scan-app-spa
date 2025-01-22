@@ -43,10 +43,6 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
-      - name: contenuto info.plist
-        script: |
-          cat ios/App/App/info.plist
-
       - name: Build IPA
         script: |
           xcodebuild \
@@ -56,6 +52,8 @@ workflows:
             -configuration Release \
             -allowProvisioningUpdates \
             -archivePath $PWD/build/App.xcarchive \
+            CODE_SIGN_IDENTITY="iPhone Distribution" \
+            PROVISIONING_PROFILE_SPECIFIER="scanapp-provisioning" \
             archive
 
       - name: Export IPA
