@@ -48,6 +48,9 @@ workflows:
             -developmentTeam "$DEVELOPMENT_TEAM_ID" \
             archive
 
+          echo "Contenuto della cartella build:"
+            ls -R $PWD/build
+
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
