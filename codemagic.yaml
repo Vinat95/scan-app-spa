@@ -36,7 +36,8 @@ workflows:
           npx cap sync ios
 
       - name: Configurare le impostazioni di firma del codice sul progetto Xcode
-        script: xcode-project use-profiles
+        script: |
+          xcode-project use-profiles
 
       - name: Build IPA
         script: |
