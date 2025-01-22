@@ -12,6 +12,6 @@
         <string>$PROVISIONING_NAME</string>
     </dict>
     <key>signingStyle</key>
-    <string>manual</string>
+    <string>automatic</string>
 </dict>
 </plist>
