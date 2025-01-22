@@ -32,9 +32,12 @@ workflows:
           npx capacitor-assets generate
           npx cap sync ios
 
+      - name: Copia exportOptions.plist
+        script: |
+          cp exportOptions.plist ios/App/
+
       - name: Firma e crea l'IPA
         script: |
-          export OPTIONS_PLIST_PATH="$PWD/exportOptions.plist"  # Aggiungi un percorso esplicito
           xcodebuild \
             -workspace ios/App.xcworkspace \
             -scheme App \
@@ -45,7 +48,7 @@ workflows:
           xcodebuild \
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
-            -exportOptionsPlist $OPTIONS_PLIST_PATH \  # Usa il percorso esplicito
+            -exportOptionsPlist ios/App/exportOptions.plist \
             -exportPath $PWD/build/ \
             -allowProvisioningUpdates
     artifacts:
