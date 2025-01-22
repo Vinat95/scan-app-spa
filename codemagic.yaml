@@ -39,7 +39,7 @@ workflows:
       - name: Firma e crea l'IPA
         script: |
           xcodebuild \
-            -workspace ios/App.xcworkspace \
+            -workspace ios/App/App.xcworkspace \
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
