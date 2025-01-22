@@ -44,10 +44,9 @@ workflows:
             -sdk iphoneos \
             -configuration Release \
             -allowProvisioningUpdates \
-            -archivePath $PWD/build/App.xcarchive archive
-            -verbose
-          echo "Verifica se il file .xcarchive è stato creato:"
-          ls -R $PWD/build/
+            -archivePath $PWD/build/App.xcarchive \
+            -developmentTeam "$DEVELOPMENT_TEAM_ID" \
+            archive
 
           xcodebuild \
             -exportArchive \
