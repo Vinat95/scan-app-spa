@@ -5,6 +5,9 @@ workflows:
     environment:
       groups:
         - ios_bricoscan_signing
+      ios_signing:
+        distribution_type: ad_hoc
+         bundle_identifier: "$BUNDLE_IDENTIFIER"
       vars:
         FLAVOR: "production"
         APPLE_DEVELOPER_TEAM_ID: "$DEVELOPMENT_TEAM_ID"
@@ -32,30 +35,8 @@ workflows:
           npx capacitor-assets generate
           npx cap sync ios
 
-      - name: Decodifica certificato .p12
-        script: |
-          echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
-
-      - name: Decodifica profilo di provisioning
-        script: |
-          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ios/App/scanapp-provisioning.mobileprovision
-
-      - name: Copia exportOptions.plist
-        script: |
-          cp exportOptions.plist ios/App/
-
-      - name: Crea keychain personalizzato
-        script: |
-          security create-keychain -p $CERTIFICATE_PASSWORD ios/keychain
-
-      - name: Importa certificato
-        script: |
-          echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
-          security import ios/App/certificate.p12 -k ~/Library/Keychains/ios/keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
-
-      - name: Configura provisioning profile
-        script: |
-          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/scanapp-provisioning.mobileprovision
+      - name: Configurare le impostazioni di firma del codice sul progetto Xcode
+        script: xcode-project use-profiles
 
       - name: Build IPA
         script: |
