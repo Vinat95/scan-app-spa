@@ -36,8 +36,26 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
+      - name: Imposta la variabile dell'ID del team
+        script: |
+          export DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM_ID"
+
       - name: Firma e crea l'IPA
         script: |
+          # Imposta variabili per il certificato e il profilo di provisioning
+          export CERT_PATH="$HOME/ci/certificates/scanappcertificate.p12"
+          export PROFILE_PATH="$HOME/ci/provisioning/scanapp-provisioning.mobileprovision"
+
+          # Estrai la password dal keychain per il certificato .p12
+          security create-keychain -p "" ios-build.keychain
+          security import $CERT_PATH -k ios-build.keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
+          security unlock-keychain -p "" ios-build.keychain
+
+          # Imposta il profilo di provisioning
+          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
+          cp $PROFILE_PATH ~/Library/MobileDevice/Provisioning\ Profiles/
+
+          # Esegui la build
           xcodebuild \
             -workspace ios/App/App.xcworkspace \
             -scheme App \
