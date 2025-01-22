@@ -44,14 +44,14 @@ workflows:
         script: |
           cp exportOptions.plist ios/App/
 
-      - name: Copia il profilo di provisioning
+      - name: Importa certificato
         script: |
-          mkdir -p ~/Library/MobileDevice/Provisioning\ Profiles
-          cp ios/App/scanapp-provisioning.mobileprovision ~/Library/MobileDevice/Provisioning\ Profiles/
+          echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
+          security import ios/App/certificate.p12 -k ~/Library/Keychains/login.keychain -P $CERTIFICATE_PASSWORD -T /usr/bin/codesign
 
-      - name: Importa il certificato
+      - name: Configura provisioning profile
         script: |
-          security import ios/App/certificate.p12 -k ~/Library/Keychains/login.keychain -P $CERTIFICATE_PASSWORD
+          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/scanapp-provisioning.mobileprovision
 
       - name: Build IPA
         script: |
