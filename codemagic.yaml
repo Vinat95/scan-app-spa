@@ -61,9 +61,8 @@ workflows:
             -scheme App \
             -sdk iphoneos \
             -configuration Release \
-            -allowProvisioningUpdates \
             -archivePath $PWD/build/App.xcarchive \
-            -developmentTeam "$DEVELOPMENT_TEAM_ID" \
+            -allowProvisioningUpdates \
             archive
 
           echo "Contenuto della cartella build:"
