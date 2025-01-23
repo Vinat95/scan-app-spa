@@ -28,6 +28,7 @@ workflows:
       - name: verifica certificato
         script: |
           security find-identity -v -p codesigning
+          security dump-keychain ~/Library/Keychains/build.keychain
 
       - name: verifica profile
         script: |
