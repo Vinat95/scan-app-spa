@@ -33,10 +33,6 @@ workflows:
         script: |
           security cms -D -i ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision
 
-      - name: verifica contenuto mobileprovision
-        script: |
-          security cms -D -i scanappprovisioning.mobileprovision
-
       - name: Build Ionic
         script: |
           ionic build --prod
@@ -57,6 +53,7 @@ workflows:
 
       - name: Build IPA
         script: |
+          xcodebuild clean
           xcodebuild \
             -workspace ios/App/App.xcworkspace \
             -scheme App \
