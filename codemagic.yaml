@@ -72,4 +72,4 @@ workflows:
             -exportPath $PWD/build/
 
     artifacts:
-      - $PWD/build/IPA/*.ipa
+      - $PWD/build/**
