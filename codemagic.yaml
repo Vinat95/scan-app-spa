@@ -70,6 +70,7 @@ workflows:
             -archivePath $PWD/build/App.xcarchive \
             -exportOptionsPlist ios/App/exportOptions.plist \
             -exportPath $PWD/build/
+            -allowProvisioningUpdates \
 
     artifacts:
       - $PWD/build/IPA/*.ipa
