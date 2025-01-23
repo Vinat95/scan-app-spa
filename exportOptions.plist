@@ -5,11 +5,11 @@
     <key>method</key>
     <string>release-testing</string>
     <key>teamID</key>
-    <string>$DEVELOPMENT_TEAM_ID</string>
+    <string>66JC5AYWBZ</string>
     <key>provisioningProfiles</key>
     <dict>
-        <key>$BUNDLE_IDENTIFIER</key>
-        <string>$PROVISIONING_NAME</string>
+        <key>com.ionic.scanapp</key>
+        <string>scanapp-provisioning</string>
     </dict>
     <key>signingStyle</key>
     <string>automatic</string>

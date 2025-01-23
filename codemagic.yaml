@@ -7,10 +7,10 @@ workflows:
         - ios_bricoscan_signing
       ios_signing:
         distribution_type: ad_hoc
-        bundle_identifier: "$BUNDLE_IDENTIFIER"
+        bundle_identifier: "com.ionic.scanapp"
       vars:
         FLAVOR: "production"
-        APPLE_DEVELOPER_TEAM_ID: "$DEVELOPMENT_TEAM_ID"
+        APPLE_DEVELOPER_TEAM_ID: "66JC5AYWBZ"
       node: latest
       xcode: latest
       cocoapods: default
@@ -28,7 +28,6 @@ workflows:
       - name: verifica certificato
         script: |
           security find-identity -v -p codesigning
-          security dump-keychain ~/Library/Keychains/build.keychain
 
       - name: verifica profile
         script: |
