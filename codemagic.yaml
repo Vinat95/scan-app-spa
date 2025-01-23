@@ -25,14 +25,6 @@ workflows:
         script: |
           npm install --force
 
-      - name: verifica certificato
-        script: |
-          security find-identity -v -p codesigning
-
-      - name: verifica profile
-        script: |
-          security cms -D -i ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision
-
       - name: Build Ionic
         script: |
           ionic build --prod
@@ -72,4 +64,4 @@ workflows:
             -exportPath $PWD/build/
 
     artifacts:
-      - $PWD/build/**
+      - /Users/builder/clone/build/**/*.ipa
