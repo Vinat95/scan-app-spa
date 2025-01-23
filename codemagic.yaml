@@ -25,6 +25,18 @@ workflows:
         script: |
           npm install --force
 
+      - name: verifica certificato
+        script: |
+          security find-identity -v -p codesigning
+
+      - name: verifica profile
+        script: |
+          security cms -D -i ~/Library/MobileDevice/Provisioning\ Profiles/*.mobileprovision
+
+      - name: verifica contenuto mobileprovision
+        script: |
+          security cms -D -i scanappprovisioning.mobileprovision
+
       - name: Build Ionic
         script: |
           ionic build --prod
