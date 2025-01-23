@@ -25,15 +25,6 @@ workflows:
         script: |
           npm install --force
 
-      - name: Importazione del certificato .p12 nel keychain
-        script: |
-          echo "$CERTIFICATE_BASE64" | base64 --decode > ios/App/certificate.p12
-          security import ios/App/certificate.p12 -k ~/Library/Keychains/build.keychain -P "$CERTIFICATE_PASSWORD" -T /usr/bin/codesign
-
-      - name: Importazione del provisioning profile
-        script: |
-          echo "$PROVISIONING_PROFILE_BASE64" | base64 --decode > ~/Library/MobileDevice/Provisioning\ Profiles/scanapp-provisioning.mobileprovision
-
       - name: Build Ionic
         script: |
           ionic build --prod
