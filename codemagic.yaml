@@ -69,7 +69,6 @@ workflows:
             -exportArchive \
             -archivePath $PWD/build/App.xcarchive \
             -exportOptionsPlist ios/App/exportOptions.plist \
-            -allowProvisioningUpdates \
             -exportPath $PWD/build/
 
     artifacts:
