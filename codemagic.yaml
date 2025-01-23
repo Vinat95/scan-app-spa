@@ -62,15 +62,5 @@ workflows:
             -exportOptionsPlist ios/App/exportOptions.plist \
             -exportPath $PWD/build/
 
-      - name: Rimozione del certificato dal keychain
-        script: |
-          # Rimuove il certificato importato dal keychain
-          security delete-certificate -c "iPhone Distribution: Vincenzo Attanasio" ~/Library/Keychains/login.keychain
-
-      - name: Rimozione del certificato .p12
-        script: |
-          # Rimuove il file .p12 dal filesystem per motivi di sicurezza
-          rm -f certificate.p12
-
     artifacts:
       - $PWD/build/IPA/*.ipa
