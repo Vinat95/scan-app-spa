@@ -35,6 +35,11 @@ workflows:
           npx capacitor-assets generate
           npx cap sync ios
 
+      - name: Aggiungi NSCameraUsageDescription
+        script: |
+          /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist || \
+          /usr/libexec/PlistBuddy -c "Set :NSCameraUsageDescription 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist
+
       - name: Configurare le impostazioni di firma del codice sul progetto Xcode
         script: |
           xcode-project use-profiles
