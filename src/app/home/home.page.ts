@@ -94,27 +94,40 @@ export class HomePage implements OnDestroy {
   }
 
   async takePhoto() {
-    const image = await Camera.getPhoto({
-      quality: 90, // Qualità dell'immagine
-      resultType: CameraResultType.DataUrl, // Tipo di risultato: Base64, URI, ecc.
-      source: CameraSource.Camera, // Usa la fotocamera
-    });
+    const permissions = await Camera.checkPermissions();
+    if (permissions.camera !== "granted") {
+      const result = await Camera.requestPermissions();
+      if (result.camera !== "granted") {
+        alert("Permesso fotocamera non concesso");
+        return;
+      }
+    }
+    try {
+      const image = await Camera.getPhoto({
+        quality: 90, // Qualità dell'immagine
+        resultType: CameraResultType.DataUrl, // Tipo di risultato: Base64, URI, ecc.
+        source: CameraSource.Camera, // Usa la fotocamera
+      });
 
-    // Ora hai l'immagine sotto forma di data URL
-    if (image.dataUrl) {
-      // Converti il base64 in un Blob
-      const blob = convertBase64ToBlob(image.dataUrl, "image/jpeg");
+      // Ora hai l'immagine sotto forma di data URL
+      if (image.dataUrl) {
+        // Converti il base64 in un Blob
+        const blob = convertBase64ToBlob(image.dataUrl, "image/jpeg");
 
-      // Crea un oggetto File dal Blob
-      const file = new File(
-        [blob],
-        `${this.form.get("userCode")?.value}-${Date.now()}`,
-        { type: "image/jpeg" }
-      );
-      const photoUrl = URL.createObjectURL(file);
-      this.photoUrls.push(photoUrl);
+        // Crea un oggetto File dal Blob
+        const file = new File(
+          [blob],
+          `${this.form.get("userCode")?.value}-${Date.now()}`,
+          { type: "image/jpeg" }
+        );
+        const photoUrl = URL.createObjectURL(file);
+        this.photoUrls.push(photoUrl);
 
-      (this.form.get("photos") as FormArray).push(this.fb.control(file));
+        (this.form.get("photos") as FormArray).push(this.fb.control(file));
+      }
+    } catch (error) {
+      console.error("Errore durante la cattura della foto:", error);
+      alert(error);
     }
   }
 
