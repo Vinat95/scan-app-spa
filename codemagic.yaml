@@ -40,8 +40,10 @@ workflows:
         script: |
           /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist || \
           /usr/libexec/PlistBuddy -c "Set :NSCameraUsageDescription 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist
-          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string 'La libreria foto viene utilizzata per salvare e accedere alle immagini.'" ios/App/App/Info.plist || \
-          /usr/libexec/PlistBuddy -c "Set :NSPhotoLibraryAddUsageDescription 'La libreria foto viene utilizzata per salvare e accedere alle immagini.'" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryUsageDescription string 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist || \
+          /usr/libexec/PlistBuddy -c "Set :NSPhotoLibraryUsageDescription 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist || \
+          /usr/libexec/PlistBuddy -c "Set :NSPhotoLibraryAddUsageDescription 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist
 
       - name: Configurare le impostazioni di firma del codice sul progetto Xcode
         script: |
