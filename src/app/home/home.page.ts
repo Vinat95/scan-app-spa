@@ -69,7 +69,9 @@ export class HomePage implements OnDestroy {
 
   disablePhotoButton(): boolean {
     return (
-      this.form.get("userCode")?.value === "" || this.photoUrls.length >= 3
+      this.form.get("userCode")?.value === "" ||
+      this.photoUrls.length >= 3 ||
+      this.form.get("userCode")?.value.length !== 2
     );
   }
 
