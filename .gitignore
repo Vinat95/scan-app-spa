@@ -6,7 +6,6 @@
 /android
 /out-tsc
 /bazel-out
-/resources
 /ios
 
 # Node
