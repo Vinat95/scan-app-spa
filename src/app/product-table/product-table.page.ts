@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { Component } from "@angular/core";
 import { Product, Products } from "types/product";
 import { Prodotti } from "src/data/source";
 import { AlertController, NavController } from "@ionic/angular";
