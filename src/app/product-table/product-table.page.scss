@@ -10,7 +10,6 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
   /* Animazione di typing senza delay */
   animation: typing 1s linear forwards; /* Aggiungi animazione typing senza delay */
-  -webkit-animation: typing 1s linear forwards;
   /* Aggiungi flexbox per allineare l'icona e il testo sulla stessa riga */
   display: flex;
   align-items: center; /* Allinea verticalmente l'icona e il testo */
@@ -18,7 +17,6 @@
   width: fit-content; /* Aggiunto per permettere il controllo del testo */
   overflow: hidden; /* Nasconde il testo in eccesso mentre la scrittura si anima */
   white-space: nowrap; /* Impedisce che il testo vada a capo */
-  will-change: width;
 }
 
 .image-gallery {

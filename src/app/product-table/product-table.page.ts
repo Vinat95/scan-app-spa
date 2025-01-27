@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { AfterViewInit, Component, OnInit } from "@angular/core";
 import { Product, Products } from "types/product";
 import { Prodotti } from "src/data/source";
 import { AlertController, NavController } from "@ionic/angular";
@@ -12,7 +12,7 @@ import { firstValueFrom } from "rxjs";
   templateUrl: "./product-table.page.html",
   styleUrls: ["./product-table.page.scss"],
 })
-export class ProductTablePage {
+export class ProductTablePage implements AfterViewInit {
   removingProducts = new Set<Product>();
   isLoading: boolean = false;
   editingPriceProduct: Product | null = null;
@@ -27,6 +27,23 @@ export class ProductTablePage {
     private toastService: ToastService,
     private navCtrl: NavController
   ) {}
+
+  ngAfterViewInit(): void {
+    const element: any = document.querySelector('.product-count');
+
+    if (element) {
+      const observer = new MutationObserver(() => {
+        // Forza il riavvio dell'animazione
+        element.style.animation = 'none';
+        setTimeout(() => {
+          element.style.animation = 'typing 1s steps(60) forwards';
+        }, 10);
+      });
+  
+      // Osserva i cambiamenti nel contenuto dell'elemento
+      observer.observe(element, { childList: true, subtree: true });
+    }
+  }
 
   togglePhotoGallery(product: any): void {
     //Pulizia pre apertura

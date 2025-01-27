@@ -129,7 +129,6 @@ export class HomePage implements OnDestroy {
       }
     } catch (error) {
       console.error("Errore durante la cattura della foto:", error);
-      alert(error);
     }
   }
 
