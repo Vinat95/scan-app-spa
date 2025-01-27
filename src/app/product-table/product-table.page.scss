@@ -9,8 +9,8 @@
   color: #2f4f4f; /* Colore del testo */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Aggiunge una leggera ombra */
   /* Animazione di typing senza delay */
-  animation: typing 1s steps(60) forwards; /* Aggiungi animazione typing senza delay */
-  -webkit-animation: typing 1s steps(60) forwards;
+  animation: typing 1s linear forwards; /* Aggiungi animazione typing senza delay */
+  -webkit-animation: typing 1s linear forwards;
   /* Aggiungi flexbox per allineare l'icona e il testo sulla stessa riga */
   display: flex;
   align-items: center; /* Allinea verticalmente l'icona e il testo */
@@ -38,7 +38,6 @@
   border-radius: 8px;
   border: 1px solid #ccc;
 }
-
 
 @keyframes typing {
   from {
@@ -128,12 +127,11 @@ ion-item-sliding.removing {
   }
 }
 
-
-ion-label p{
+ion-label p {
   color: #333;
 }
 
-ion-label span{
+ion-label span {
   gap: 3;
   color: #666666;
 }
