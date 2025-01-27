@@ -5,7 +5,7 @@ export type Product = {
   price: number;
   note: string;
   inPromo: boolean;
-  date: Date;
+  date: string;
   photos: Array<string>;
 };
 

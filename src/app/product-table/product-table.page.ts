@@ -12,7 +12,7 @@ import { firstValueFrom } from "rxjs";
   templateUrl: "./product-table.page.html",
   styleUrls: ["./product-table.page.scss"],
 })
-export class ProductTablePage implements OnInit {
+export class ProductTablePage {
   removingProducts = new Set<Product>();
   isLoading: boolean = false;
   editingPriceProduct: Product | null = null;
@@ -27,10 +27,6 @@ export class ProductTablePage implements OnInit {
     private toastService: ToastService,
     private navCtrl: NavController
   ) {}
-
-  ngOnInit() {
-    //console.log("Photos", this.productsList.products); //Esistono
-  }
 
   togglePhotoGallery(product: any): void {
     //Pulizia pre apertura
@@ -148,6 +144,22 @@ export class ProductTablePage implements OnInit {
 
   isEditingPrice(product: Product): boolean {
     return this.editingPriceProduct === product; // Verifica se è in modifica
+  }
+
+  formatDate(date: string): string {
+    const [datePart, timePart] = date.split(", ");
+
+    let year = datePart.slice(0, 2); // aa
+    const month = datePart.slice(2, 4); // mm
+    const day = datePart.slice(4, 6); // gg
+
+    year = parseInt(year, 10) < 50 ? `20${year}` : `19${year}`;
+
+    const hours = timePart.slice(0, 2); // hh
+    const minutes = timePart.slice(2, 4); // mm
+    const seconds = timePart.slice(4, 6); // ss
+
+    return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
   }
 
   savePrice(product: Product) {

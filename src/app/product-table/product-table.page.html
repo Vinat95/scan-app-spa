@@ -1,5 +1,5 @@
 <ion-content [fullscreen]="true">
-  <div class="view" [style.margin-top]="'5rem'">
+  <div class="view" [style.margin-top]="'6rem'">
     <!-- Controllo se ci sono prodotti -->
     @if (productsList.products.length > 0) {
     <div class="product-count">
@@ -55,7 +55,9 @@
               <span> {{ prod.inPromo ? 'Si' : 'No' }}</span>
             </p>
             <p><strong>Note:</strong> <span> {{ prod.note }}</span></p>
-            <p><strong>Data:</strong> <span> {{ prod.date }}</span></p>
+            <p>
+              <strong>Data:</strong> <span> {{ formatDate(prod.date) }}</span>
+            </p>
 
             <!-- Sezione immagini visibile solo per il prodotto selezionato -->
             <div *ngIf="expandedProduct === prod" class="image-gallery">
@@ -91,7 +93,7 @@
         </ion-item-options>
       </ion-item-sliding>
     </ion-list>
-      } @else {
+    } @else {
     <div class="noProduct">
       <ion-icon name="file-tray-stacked-outline"></ion-icon>
       Nessun Prodotto Aggiunto
