@@ -6,6 +6,13 @@ import { MailService } from "../services/mail.service";
 import { ToastService } from "../services/toast.service";
 import { S3Service } from "../services/s3.service";
 import { firstValueFrom } from "rxjs";
+import {
+  trigger,
+  transition,
+  animate,
+  keyframes,
+  style,
+} from "@angular/animations";
 
 @Component({
   selector: "app-product-table",
