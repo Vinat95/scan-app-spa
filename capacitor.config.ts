@@ -10,6 +10,7 @@ const config: CapacitorConfig = {
       launchShowDuration: 3000,
       launchAutoHide: true,
       backgroundColor: "#ffffffff", // Bianco
+      androidSplashResourceName: "splash",
       androidScaleType: "CENTER_CROP",
       showSpinner: false,
     },
