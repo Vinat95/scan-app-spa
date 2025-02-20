@@ -32,11 +32,12 @@ workflows:
       - name: Aggiunta ios
         script: |
           npx cap add ios
+          sed -i '' 's/platform :ios, '\''13.0'\''/platform :ios, '\''14.0'\''/' ios/App/Podfile
           npx capacitor-assets generate
           npx cap sync ios
           npx cap sync
 
-      - name: Aggiungi permessi camera
+      - name: Aggiungi permessi camera e gps
         script: |
           /usr/libexec/PlistBuddy -c "Add :NSCameraUsageDescription string 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist || \
           /usr/libexec/PlistBuddy -c "Set :NSCameraUsageDescription 'La fotocamera viene utilizzata per scansionare i codici a barre.'" ios/App/App/Info.plist
