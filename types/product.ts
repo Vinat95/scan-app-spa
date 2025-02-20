@@ -1,5 +1,6 @@
 export type Product = {
   shopName: string;
+  location: string;
   userCode: string;
   ean: string;
   price: number;

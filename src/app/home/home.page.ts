@@ -25,6 +25,7 @@ export class HomePage implements OnDestroy {
   constructor(private fb: FormBuilder, private toastService: ToastService) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
+      location: ["", [Validators.maxLength(250)]],
       userCode: [
         "",
         [Validators.required, Validators.maxLength(2), Validators.minLength(2)],
