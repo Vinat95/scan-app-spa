@@ -54,11 +54,12 @@ export class HomePage implements OnDestroy {
   async getLocation() {
     const position = await this.locationService.getCurrentPosition();
     if (position) {
-      const town = await this.locationService.getTownFromCoordinates(
-        position.lat,
-        position.lon
-      );
-      this.town = town ? town : "Posizione non trovata";
+      this.form.patchValue({
+        location: await this.locationService.getTownFromCoordinates(
+          position.lat,
+          position.lon
+        ),
+      });
     } else {
       this.town = "Impossibile ottenere la posizione";
     }

@@ -30,6 +30,7 @@
         <ion-item>
           <ion-label>
             <p><strong>Ean:</strong> <span> {{ prod.ean }}</span></p>
+            <p><strong>Località:</strong><span>{{prod.location}}</span></p>
             <div class="price-container">
               <strong>Prezzo(€):</strong>
               <ion-input
@@ -45,8 +46,9 @@
               ></ion-icon>
               <ion-icon
                 name="checkmark"
-                (click)="savePrice(prod)"
+                (click)="prod.price !== null ? savePrice(prod) : null"
                 *ngIf="isEditingPrice(prod)"
+                [ngClass]="{'disabled-icon': prod.price === null}"
                 style="cursor: pointer; color: green"
               ></ion-icon>
             </div>
