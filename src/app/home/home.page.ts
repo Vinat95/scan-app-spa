@@ -7,6 +7,7 @@ import { Insegne } from "src/data/shops";
 import { Insignia } from "types/shops";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { convertBase64ToBlob } from "../helpers/base64toblob";
+import { LocationService } from "../services/location.service";
 
 @Component({
   selector: "app-home",
@@ -20,9 +21,14 @@ export class HomePage implements OnDestroy {
   form: FormGroup; // Utilizzo di FormGroup per tutto il form
   result = "";
   successMessage: string = ""; // Variabile per gestire il messaggio di successo
+  town: string = "";
   scanActive = false;
 
-  constructor(private fb: FormBuilder, private toastService: ToastService) {
+  constructor(
+    private fb: FormBuilder,
+    private toastService: ToastService,
+    private locationService: LocationService
+  ) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
       location: ["", [Validators.maxLength(250)]],
@@ -42,6 +48,20 @@ export class HomePage implements OnDestroy {
     this.form.get("note")?.valueChanges.subscribe((value) => {
       this.remainingChars = 250 - value.length;
     });
+    this.getLocation();
+  }
+
+  async getLocation() {
+    const position = await this.locationService.getCurrentPosition();
+    if (position) {
+      const town = await this.locationService.getTownFromCoordinates(
+        position.lat,
+        position.lon
+      );
+      this.town = town ? town : "Posizione non trovata";
+    } else {
+      this.town = "Impossibile ottenere la posizione";
+    }
   }
 
   getEanErrorText(): string {

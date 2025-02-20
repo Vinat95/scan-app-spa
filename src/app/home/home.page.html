@@ -25,6 +25,8 @@
       </ion-select-option>
     </ion-select>
 
+    {{town}}
+
     <ion-text
       color="danger"
       *ngIf="form.get('shopName')?.invalid && form.get('shopName')?.touched"
@@ -80,8 +82,8 @@
       labelPlacement="floating"
       [errorText]="getEanErrorText()"
       formControlName="ean"
-      ></ion-input>
-      <!-- helperText="Il codice scansionato apparirà qui, ed ha bisogno di 13 cifre numeriche" -->
+    ></ion-input>
+    <!-- helperText="Il codice scansionato apparirà qui, ed ha bisogno di 13 cifre numeriche" -->
 
     @if (hasPhotos()) {
     <ion-row>
@@ -114,7 +116,7 @@
           [disabled]="disablePhotoButton()"
           (click)="takePhoto()"
         >
-          <ion-icon name="camera-outline"  slot="start"></ion-icon> Foto
+          <ion-icon name="camera-outline" slot="start"></ion-icon> Foto
         </ion-button>
       </ion-col>
     </ion-row>
