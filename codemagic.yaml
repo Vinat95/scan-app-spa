@@ -44,6 +44,10 @@ workflows:
           /usr/libexec/PlistBuddy -c "Set :NSPhotoLibraryUsageDescription 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist
           /usr/libexec/PlistBuddy -c "Add :NSPhotoLibraryAddUsageDescription string 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist || \
           /usr/libexec/PlistBuddy -c "Set :NSPhotoLibraryAddUsageDescription 'La libreria foto viene utilizzata per accedere alle immagini.'" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSLocationWhenInUseUsageDescription string 'Questa app usa la tua posizione per trovare la città.'" ios/App/App/Info.plist || \
+          /usr/libexec/PlistBuddy -c "Set :NSLocationWhenInUseUsageDescription 'Questa app usa la tua posizione per trovare la città.'" ios/App/App/Info.plist
+          /usr/libexec/PlistBuddy -c "Add :NSLocationAlwaysUsageDescription string 'Questa app usa la tua posizione anche quando è in background.'" ios/App/App/Info.plist || \
+          /usr/libexec/PlistBuddy -c "Set :NSLocationAlwaysUsageDescription 'Questa app usa la tua posizione anche quando è in background.'" ios/App/App/Info.plist
 
       - name: Configurare le impostazioni di firma del codice sul progetto Xcode
         script: |
