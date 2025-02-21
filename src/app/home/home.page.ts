@@ -215,6 +215,7 @@ export class HomePage implements OnDestroy {
       // Resetta solo i campi non bloccati
       this.form.reset({
         shopName: this.form.get("shopName")?.value,
+        location: this.form.get("location")?.value,
         userCode: this.form.get("userCode")?.value,
         price: null,
         note: "",
