@@ -8,6 +8,7 @@ import { Insignia } from "types/shops";
 import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { convertBase64ToBlob } from "../helpers/base64toblob";
 import { LocationService } from "../services/location.service";
+import { LoadingService } from "../services/loading.service";
 
 @Component({
   selector: "app-home",
@@ -27,7 +28,8 @@ export class HomePage implements OnDestroy {
   constructor(
     private fb: FormBuilder,
     private toastService: ToastService,
-    private locationService: LocationService
+    private locationService: LocationService,
+    private spinnerService: LoadingService
   ) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
@@ -52,6 +54,7 @@ export class HomePage implements OnDestroy {
   }
 
   async getLocation() {
+    this.spinnerService.show();
     const position = await this.locationService.getCurrentPosition();
     if (position) {
       this.form.patchValue({
@@ -60,8 +63,17 @@ export class HomePage implements OnDestroy {
           position.lon
         ),
       });
+      this.toastService.showToast({
+        type: "success",
+        message: "Posizione ottenuta",
+      });
+      this.spinnerService.hide();
     } else {
-      this.town = "Impossibile ottenere la posizione";
+      this.toastService.showToast({
+        type: "error",
+        message: "Impossibile ottenere la posizione",
+      });
+      this.spinnerService.hide();
     }
   }
 
