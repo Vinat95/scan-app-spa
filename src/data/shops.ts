@@ -32,6 +32,9 @@ export const Insegne: Insignia[] = [
     name: "CFadda Fai da te",
   },
   {
+    name: "Cinese",
+  },
+  {
     name: "Altro",
   },
 ];

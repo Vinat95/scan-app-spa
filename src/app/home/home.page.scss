@@ -50,7 +50,7 @@
   border-radius: 12px; /* Bordi arrotondati */
   padding: 16px;
   margin: 16px;
-  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1); /* Ombreggiatura sottile */
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.3); /* Ombreggiatura sottile */
   background-color: #ffffff; /* Sfondo bianco */
 }
 
@@ -85,6 +85,24 @@ ion-select {
 ion-item > .item-native{
   padding-left: 0 !important;
 }
+
+.version {
+  font-size: 12px;
+  color: #bbb;
+  text-align: center;
+  letter-spacing: 2px;
+  font-weight: bold;
+
+  /* Effetto forgiato */
+  text-shadow: 
+    1px 1px 0px rgba(255, 255, 255, 0.6), /* Luce in alto */
+    -1px -1px 1px rgba(0, 0, 0, 0.8); /* Ombra sotto */
+}
+
+
+  
+
+
 
 
 
