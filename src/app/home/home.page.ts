@@ -65,7 +65,8 @@ export class HomePage implements OnDestroy {
       });
       this.toastService.showToast({
         type: "success",
-        message: "Posizione ottenuta",
+        message:
+          "Posizione ottenuta (" + this.form.get("location")?.value + ")",
       });
       this.spinnerService.hide();
     } else {
