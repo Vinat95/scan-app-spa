@@ -27,7 +27,7 @@ export class LocationService {
         `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
       );
       const data = await response.json();
-      return data.address?.town || null;
+      return data.display_name || null;
     } catch (error) {
       console.error("Errore nel recuperare la città:", error);
       return null;

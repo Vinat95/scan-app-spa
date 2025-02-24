@@ -66,7 +66,7 @@ export class HomePage implements OnDestroy {
       this.toastService.showToast({
         type: "success",
         message:
-          "Posizione ottenuta (" + this.form.get("location")?.value + ")",
+          "Posizione ottenuta",
       });
       this.spinnerService.hide();
     } else {
