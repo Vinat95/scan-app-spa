@@ -11,12 +11,14 @@ import { SpinnerInterceptor } from "./interceptors/spinner.interceptor";
 import { ToastService } from "./services/toast.service";
 import { ErrorInterceptor } from "./interceptors/error.interceptor";
 import { S3Service } from "./services/s3.service";
+import { IonicStorageModule } from "@ionic/storage-angular";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     BrowserModule,
     IonicModule.forRoot(),
+    IonicStorageModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
   ],

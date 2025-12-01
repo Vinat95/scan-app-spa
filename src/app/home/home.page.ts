@@ -9,6 +9,7 @@ import { Camera, CameraResultType, CameraSource } from "@capacitor/camera";
 import { convertBase64ToBlob } from "../helpers/base64toblob";
 import { LocationService } from "../services/location.service";
 import { LoadingService } from "../services/loading.service";
+import { StorageService } from "../services/storage.service";
 
 @Component({
   selector: "app-home",
@@ -29,7 +30,8 @@ export class HomePage implements OnDestroy {
     private fb: FormBuilder,
     private toastService: ToastService,
     private locationService: LocationService,
-    private spinnerService: LoadingService
+    private spinnerService: LoadingService,
+    private storageService: StorageService
   ) {
     this.form = this.fb.group({
       shopName: ["", [Validators.required]],
@@ -193,7 +195,7 @@ export class HomePage implements OnDestroy {
   }
 
   // Funzione per aggiungere il prodotto all'array
-  addProduct() {
+  async addProduct() {
     if (this.form.valid) {
       // Ottieni la data e l'ora correnti nel formato desiderato
       const currentDate = new Date();
@@ -220,6 +222,10 @@ export class HomePage implements OnDestroy {
       });
 
       Prodotti.products.push({ ...this.form.value });
+      
+      // Salva la lista aggiornata nello storage
+      await this.storageService.saveProducts(Prodotti);
+      
       this.toastService.showToast({
         type: "success",
         message: "Prodotto aggiunto con successo",

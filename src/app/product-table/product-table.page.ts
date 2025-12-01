@@ -1,10 +1,11 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Product, Products } from "types/product";
 import { Prodotti } from "src/data/source";
 import { AlertController, NavController } from "@ionic/angular";
 import { MailService } from "../services/mail.service";
 import { ToastService } from "../services/toast.service";
 import { S3Service } from "../services/s3.service";
+import { StorageService } from "../services/storage.service";
 import { firstValueFrom } from "rxjs";
 import {
   trigger,
@@ -19,7 +20,7 @@ import {
   templateUrl: "./product-table.page.html",
   styleUrls: ["./product-table.page.scss"],
 })
-export class ProductTablePage {
+export class ProductTablePage implements OnInit {
   removingProducts = new Set<Product>();
   isLoading: boolean = false;
   editingPriceProduct: Product | null = null;
@@ -32,8 +33,17 @@ export class ProductTablePage {
     private mailService: MailService,
     private s3Service: S3Service,
     private toastService: ToastService,
-    private navCtrl: NavController
+    private navCtrl: NavController,
+    private storageService: StorageService
   ) {}
+
+  async ngOnInit() {
+    // Carica i prodotti dallo storage all'avvio
+    const storedProducts = await this.storageService.loadProducts();
+    if (storedProducts && storedProducts.products.length > 0) {
+      this.productsList.products = storedProducts.products;
+    }
+  }
 
   togglePhotoGallery(product: any): void {
     //Pulizia pre apertura
@@ -126,10 +136,12 @@ export class ProductTablePage {
     this.sendProducts();
   }
 
-  sendProducts() {
+  async sendProducts() {
     this.mailService.sendProducts(this.productsList).subscribe({
-      next: (res: any) => {
+      next: async (res: any) => {
         this.productsList.products.splice(0, this.productsList.products.length);
+        // Svuota lo storage dopo l'invio
+        await this.storageService.clearProducts();
         this.toastService.showToast({
           type: "success",
           message: res.message,
