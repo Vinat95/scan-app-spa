@@ -92,7 +92,7 @@ export class ProductTablePage implements OnInit {
     await alert.present();
   }
 
-  removeProduct(product: Product) {
+  async removeProduct(product: Product) {
     const index = this.productsList.products.indexOf(product);
     if (index > -1) {
       // Aggiungi la classe "removing" per avviare l'animazione
@@ -102,9 +102,13 @@ export class ProductTablePage implements OnInit {
       this.revokePhotoUrls(this.photoUrls);
 
       // Attendi l'animazione prima di rimuovere il prodotto
-      setTimeout(() => {
+      setTimeout(async () => {
         this.productsList.products.splice(index, 1);
         this.removingProducts.delete(product);
+        
+        // Salva la lista aggiornata nello storage
+        await this.storageService.saveProducts(this.productsList);
+        
         this.toastService.showToast({
           type: "success",
           message: "Prodotto Eliminato",
@@ -181,9 +185,13 @@ export class ProductTablePage implements OnInit {
     return `${day}/${month}/${year}, ${hours}:${minutes}:${seconds}`;
   }
 
-  savePrice(product: Product) {
+  async savePrice(product: Product) {
     if (this.editingPriceProduct === product) {
       this.editingPriceProduct = null; // Disabilita la modifica
+      
+      // Salva la lista aggiornata nello storage
+      await this.storageService.saveProducts(this.productsList);
+      
       this.toastService.showToast({
         type: "success",
         message: `Prezzo del prodotto ${product.ean} aggiornato a ${product.price}€!`,
