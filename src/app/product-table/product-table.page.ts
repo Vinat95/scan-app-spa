@@ -146,6 +146,8 @@ export class ProductTablePage implements OnInit {
         this.productsList.products.splice(0, this.productsList.products.length);
         // Svuota lo storage dopo l'invio
         await this.storageService.clearProducts();
+        // Svuota anche il userCode salvato nello storage
+        await this.storageService.clearUserCode();
         this.toastService.showToast({
           type: "success",
           message: res.message,

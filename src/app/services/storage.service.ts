@@ -8,6 +8,7 @@ import { Products } from 'types/product';
 export class StorageService {
   private _storage: Storage | null = null;
   private readonly PRODUCTS_KEY = 'products_list';
+  private readonly USER_CODE_KEY = 'user_code';
 
   constructor(private storage: Storage) {
     this.init();
@@ -32,5 +33,20 @@ export class StorageService {
   // Cancella la lista dei prodotti
   async clearProducts(): Promise<void> {
     await this._storage?.remove(this.PRODUCTS_KEY);
+  }
+
+  // Salva il codice utente
+  async saveUserCode(userCode: string): Promise<void> {
+    await this._storage?.set(this.USER_CODE_KEY, userCode);
+  }
+
+  // Carica il codice utente
+  async loadUserCode(): Promise<string | null> {
+    return await this._storage?.get(this.USER_CODE_KEY);
+  }
+
+  // Cancella il codice utente
+  async clearUserCode(): Promise<void> {
+    await this._storage?.remove(this.USER_CODE_KEY);
   }
 }

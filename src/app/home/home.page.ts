@@ -10,6 +10,7 @@ import { convertBase64ToBlob } from "../helpers/base64toblob";
 import { LocationService } from "../services/location.service";
 import { LoadingService } from "../services/loading.service";
 import { StorageService } from "../services/storage.service";
+import { debounceTime } from "rxjs/operators";
 
 @Component({
   selector: "app-home",
@@ -48,11 +49,39 @@ export class HomePage implements OnDestroy {
       photos: this.fb.array([]),
     });
 
+    // Carica il userCode salvato dallo storage
+    this.loadSavedUserCode();
+
     // Monitora i cambiamenti nel campo delle note
     this.form.get("note")?.valueChanges.subscribe((value) => {
       this.remainingChars = 250 - value.length;
     });
+
+    // Monitora i cambiamenti nel campo userCode con debounce di 5 secondi
+    this.form.get("userCode")?.valueChanges
+      .pipe(debounceTime(3000)) // Attende 5 secondi dopo l'ultimo cambiamento
+      .subscribe((value) => {
+        this.saveUserCodeToStorage(value);
+      });
+
     this.getLocation();
+  }
+
+  // Carica il userCode salvato dallo storage
+  private async loadSavedUserCode(): Promise<void> {
+    const savedUserCode = await this.storageService.loadUserCode();
+    if (savedUserCode) {
+      this.form.patchValue({
+        userCode: savedUserCode
+      }, { emitEvent: false }); // emitEvent: false per evitare di triggerare il salvataggio
+    }
+  }
+
+  // Salva il userCode nello storage
+  private async saveUserCodeToStorage(userCode: string): Promise<void> {
+    if (userCode && userCode.trim() !== '') {
+      await this.storageService.saveUserCode(userCode);
+    }
   }
 
   async getLocation() {
