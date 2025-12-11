@@ -8,7 +8,7 @@ import { Products } from 'types/product';
 export class StorageService {
   private _storage: Storage | null = null;
   private readonly PRODUCTS_KEY = 'products_list';
-  private readonly USER_CODE_KEY = 'user_code';
+  private readonly USER_DATA_KEY = 'user_data';
 
   constructor(private storage: Storage) {
     this.init();
@@ -35,18 +35,20 @@ export class StorageService {
     await this._storage?.remove(this.PRODUCTS_KEY);
   }
 
-  // Salva il codice utente
-  async saveUserCode(userCode: string): Promise<void> {
-    await this._storage?.set(this.USER_CODE_KEY, userCode);
+  // Salva i dati utente (userCode e location)
+  async saveUserData(userData: { userCode?: string; location?: string }): Promise<void> {
+    const currentData = await this.loadUserData();
+    const updatedData = { ...currentData, ...userData };
+    await this._storage?.set(this.USER_DATA_KEY, updatedData);
   }
 
-  // Carica il codice utente
-  async loadUserCode(): Promise<string | null> {
-    return await this._storage?.get(this.USER_CODE_KEY);
+  // Carica i dati utente (userCode e location)
+  async loadUserData(): Promise<{ userCode: string; location: string } | null> {
+    return await this._storage?.get(this.USER_DATA_KEY);
   }
 
-  // Cancella il codice utente
-  async clearUserCode(): Promise<void> {
-    await this._storage?.remove(this.USER_CODE_KEY);
+  // Cancella i dati utente (userCode e location)
+  async clearUserData(): Promise<void> {
+    await this._storage?.remove(this.USER_DATA_KEY);
   }
 }

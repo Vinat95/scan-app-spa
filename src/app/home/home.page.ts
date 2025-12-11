@@ -49,38 +49,58 @@ export class HomePage implements OnDestroy {
       photos: this.fb.array([]),
     });
 
-    // Carica il userCode salvato dallo storage
-    this.loadSavedUserCode();
+    // Carica i dati utente salvati dallo storage (userCode e location)
+    this.loadSavedUserData();
 
     // Monitora i cambiamenti nel campo delle note
     this.form.get("note")?.valueChanges.subscribe((value) => {
       this.remainingChars = 250 - value.length;
     });
 
-    // Monitora i cambiamenti nel campo userCode con debounce di 5 secondi
+    // Monitora i cambiamenti nel campo userCode con debounce di 3 secondi
     this.form.get("userCode")?.valueChanges
-      .pipe(debounceTime(3000)) // Attende 5 secondi dopo l'ultimo cambiamento
+      .pipe(debounceTime(3000)) // Attende 3 secondi dopo l'ultimo cambiamento
       .subscribe((value) => {
-        this.saveUserCodeToStorage(value);
+        this.saveUserDataToStorage({ userCode: value });
+      });
+
+    // Monitora i cambiamenti nel campo location con debounce di 3 secondi
+    this.form.get("location")?.valueChanges
+      .pipe(debounceTime(3000)) // Attende 3 secondi dopo l'ultimo cambiamento
+      .subscribe((value) => {
+        this.saveUserDataToStorage({ location: value });
       });
 
     this.getLocation();
   }
 
-  // Carica il userCode salvato dallo storage
-  private async loadSavedUserCode(): Promise<void> {
-    const savedUserCode = await this.storageService.loadUserCode();
-    if (savedUserCode) {
+  // Carica i dati utente salvati dallo storage (userCode e location)
+  private async loadSavedUserData(): Promise<void> {
+    const savedUserData = await this.storageService.loadUserData();
+    if (savedUserData) {
       this.form.patchValue({
-        userCode: savedUserCode
+        userCode: savedUserData.userCode || '',
+        location: savedUserData.location || ''
       }, { emitEvent: false }); // emitEvent: false per evitare di triggerare il salvataggio
     }
   }
 
-  // Salva il userCode nello storage
-  private async saveUserCodeToStorage(userCode: string): Promise<void> {
-    if (userCode && userCode.trim() !== '') {
-      await this.storageService.saveUserCode(userCode);
+  // Salva i dati utente nello storage (userCode e/o location)
+  private async saveUserDataToStorage(userData: { userCode?: string; location?: string }): Promise<void> {
+    // Filtra i valori vuoti
+    const dataToSave: { userCode?: string; location?: string } = {};
+    
+    if (userData.userCode !== undefined && userData.userCode.trim() !== '') {
+      dataToSave.userCode = userData.userCode;
+    }
+    
+    if (userData.location !== undefined && userData.location.trim() !== '') {
+      dataToSave.location = userData.location;
+    }
+    
+    // Salva solo se c'è almeno un campo da salvare
+    if (Object.keys(dataToSave).length > 0) {
+      await this.storageService.saveUserData(dataToSave);
     }
   }
 
