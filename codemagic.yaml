@@ -57,7 +57,7 @@ workflows:
       - name: Aggiorno la versione dell'app iOS
         script: |
           cd ios
-          agvtool new-version -all $BUILD_NUMBER
+          agvtool new-version -all "1.0.3"
 
       - name: Copia exportOptions.plist
         script: |
