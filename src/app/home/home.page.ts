@@ -49,7 +49,7 @@ export class HomePage implements OnDestroy {
       photos: this.fb.array([]),
     });
 
-    // Carica i dati utente salvati dallo storage (userCode e location)
+    // Carica il userCode salvato dallo storage
     this.loadSavedUserData();
 
     // Monitora i cambiamenti nel campo delle note
@@ -64,38 +64,26 @@ export class HomePage implements OnDestroy {
         this.saveUserDataToStorage({ userCode: value });
       });
 
-    // Monitora i cambiamenti nel campo location con debounce di 3 secondi
-    this.form.get("location")?.valueChanges
-      .pipe(debounceTime(3000)) // Attende 3 secondi dopo l'ultimo cambiamento
-      .subscribe((value) => {
-        this.saveUserDataToStorage({ location: value });
-      });
-
     this.getLocation();
   }
 
-  // Carica i dati utente salvati dallo storage (userCode e location)
+  // Carica il userCode salvato dallo storage
   private async loadSavedUserData(): Promise<void> {
     const savedUserData = await this.storageService.loadUserData();
     if (savedUserData) {
       this.form.patchValue({
-        userCode: savedUserData.userCode || '',
-        location: savedUserData.location || ''
+        userCode: savedUserData.userCode || ''
       }, { emitEvent: false }); // emitEvent: false per evitare di triggerare il salvataggio
     }
   }
 
-  // Salva i dati utente nello storage (userCode e/o location)
-  private async saveUserDataToStorage(userData: { userCode?: string; location?: string }): Promise<void> {
+  // Salva il userCode nello storage
+  private async saveUserDataToStorage(userData: { userCode?: string }): Promise<void> {
     // Filtra i valori vuoti
-    const dataToSave: { userCode?: string; location?: string } = {};
+    const dataToSave: { userCode?: string } = {};
     
     if (userData.userCode !== undefined && userData.userCode.trim() !== '') {
       dataToSave.userCode = userData.userCode;
-    }
-    
-    if (userData.location !== undefined && userData.location.trim() !== '') {
-      dataToSave.location = userData.location;
     }
     
     // Salva solo se c'è almeno un campo da salvare

@@ -44,21 +44,21 @@ export class StorageService {
     await this._storage?.remove(this.PRODUCTS_KEY);
   }
 
-  // Salva i dati utente (userCode e location)
-  async saveUserData(userData: { userCode?: string; location?: string }): Promise<void> {
+  // Salva i dati utente (userCode)
+  async saveUserData(userData: { userCode?: string }): Promise<void> {
     await this.ensureStorageReady();
     const currentData = await this.loadUserData();
     const updatedData = { ...currentData, ...userData };
     await this._storage?.set(this.USER_DATA_KEY, updatedData);
   }
 
-  // Carica i dati utente (userCode e location)
-  async loadUserData(): Promise<{ userCode: string; location: string } | null> {
+  // Carica i dati utente (userCode)
+  async loadUserData(): Promise<{ userCode: string } | null> {
     await this.ensureStorageReady();
     return await this._storage?.get(this.USER_DATA_KEY);
   }
 
-  // Cancella i dati utente (userCode e location)
+  // Cancella i dati utente (userCode)
   async clearUserData(): Promise<void> {
     await this.ensureStorageReady();
     await this._storage?.remove(this.USER_DATA_KEY);
