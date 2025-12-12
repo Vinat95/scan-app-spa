@@ -54,6 +54,11 @@ workflows:
         script: |
           xcode-project use-profiles
 
+      - name: Aggiorno la versione dell'app iOS
+        script: |
+          cd ios
+          agvtool new-version -all $BUILD_NUMBER
+
       - name: Copia exportOptions.plist
         script: |
           cp exportOptions.plist ios/App/

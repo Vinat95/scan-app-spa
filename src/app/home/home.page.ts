@@ -77,18 +77,10 @@ export class HomePage implements OnDestroy {
     }
   }
 
-  // Salva il userCode nello storage
+  // Salva il userCode nello storage (incluso lo svuotamento)
   private async saveUserDataToStorage(userData: { userCode?: string }): Promise<void> {
-    // Filtra i valori vuoti
-    const dataToSave: { userCode?: string } = {};
-    
-    if (userData.userCode !== undefined && userData.userCode.trim() !== '') {
-      dataToSave.userCode = userData.userCode;
-    }
-    
-    // Salva solo se c'è almeno un campo da salvare
-    if (Object.keys(dataToSave).length > 0) {
-      await this.storageService.saveUserData(dataToSave);
+    if (userData.userCode !== undefined) {
+      await this.storageService.saveUserData({ userCode: userData.userCode });
     }
   }
 
