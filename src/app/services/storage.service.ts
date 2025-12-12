@@ -9,9 +9,10 @@ export class StorageService {
   private _storage: Storage | null = null;
   private readonly PRODUCTS_KEY = 'products_list';
   private readonly USER_DATA_KEY = 'user_data';
+  private initPromise: Promise<void>;
 
   constructor(private storage: Storage) {
-    this.init();
+    this.initPromise = this.init();
   }
 
   async init() {
@@ -20,23 +21,32 @@ export class StorageService {
     this._storage = storage;
   }
 
+  // Assicura che lo storage sia inizializzato prima di qualsiasi operazione
+  private async ensureStorageReady(): Promise<void> {
+    await this.initPromise;
+  }
+
   // Salva la lista dei prodotti
   async saveProducts(products: Products): Promise<void> {
+    await this.ensureStorageReady();
     await this._storage?.set(this.PRODUCTS_KEY, products);
   }
 
   // Carica la lista dei prodotti
   async loadProducts(): Promise<Products | null> {
+    await this.ensureStorageReady();
     return await this._storage?.get(this.PRODUCTS_KEY);
   }
 
   // Cancella la lista dei prodotti
   async clearProducts(): Promise<void> {
+    await this.ensureStorageReady();
     await this._storage?.remove(this.PRODUCTS_KEY);
   }
 
   // Salva i dati utente (userCode e location)
   async saveUserData(userData: { userCode?: string; location?: string }): Promise<void> {
+    await this.ensureStorageReady();
     const currentData = await this.loadUserData();
     const updatedData = { ...currentData, ...userData };
     await this._storage?.set(this.USER_DATA_KEY, updatedData);
@@ -44,11 +54,13 @@ export class StorageService {
 
   // Carica i dati utente (userCode e location)
   async loadUserData(): Promise<{ userCode: string; location: string } | null> {
+    await this.ensureStorageReady();
     return await this._storage?.get(this.USER_DATA_KEY);
   }
 
   // Cancella i dati utente (userCode e location)
   async clearUserData(): Promise<void> {
+    await this.ensureStorageReady();
     await this._storage?.remove(this.USER_DATA_KEY);
   }
 }
